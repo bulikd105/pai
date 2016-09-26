@@ -126,27 +126,17 @@ public class Lab1
 	
 	public static void MultipleThreadSim(ArrayList<String> fName)
 	{
-		for(String file : fName)
-		{
-			try
-			{
-				Path path = Paths.get(file);
-				long lines = Files.lines(path).count();
-				System.out.println("File: " + file + " has " + lines + " line(s)");
-			}
-			catch (NoSuchFileException e) 
-			{
-				System.out.println("Error: file " + file + " does not exists");
-			}
-			catch(IOException e)
-			{
-				e.printStackTrace();
-			}
-		}
+
 	}
 	
 	public static void MultipleThreadSeq(ArrayList<String> fName)
 	{
-		
+		ArrayList<Lab1Threads> threadList = new ArrayList<Lab1Threads>();
+
+		for(String file : fName)
+		{
+			Lab1Threads threads = new Lab1Threads(file);
+
+		}
 	}
 }
