@@ -8,6 +8,11 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 /* 
+ * @Autor 
+ * Damian Dworak
+ * 187677
+ * 
+ * @Description
  * Napisz program, ktory pobiera liste plikow z linii polecen i wyswietla liczbe wierszy kazdego z nich. 
  * Program powinien utworzyc jeden watek dla kazdego z plikow i uzyc tych watkow do zliczenia liczby wierszy kazdego z plikow rownoczenie. 
  * Utworz wersje programu, ktora odczytuje pliki nie jednoczesnie a sekwencyjnie. 
@@ -47,13 +52,16 @@ public class Lab1
 			
 			if(!fileList.isEmpty())
 			{
+				System.out.println("----------------------------");
 				
 				// Single thread version
 				start = 0;
 				end = 0;
 				start = System.currentTimeMillis();
 				System.out.println("\nSingle Thread started\n");
+				
 				SingleThread(fileList);
+				
 				end = System.currentTimeMillis();
 				System.out.println("\nTime to process: " + ((end - start)) + "ms");
 				System.out.println("----------------------------\n");
@@ -63,7 +71,9 @@ public class Lab1
 				end = 0;
 				start = System.currentTimeMillis();
 				System.out.println("\nMultiple Thread Simultanouse started\n");
+				
 				MultipleThreadSim(fileList);
+				
 				end = System.currentTimeMillis();
 				System.out.println("\nTime to process: " + ((end - start)) + "ms");
 				System.out.println("----------------------------\n");
@@ -73,7 +83,9 @@ public class Lab1
 				end = 0;
 				start = System.currentTimeMillis();
 				System.out.println("\nMultiple Thread Sequence started\n");
+				
 				MultipleThreadSeq(fileList);
+				
 				end = System.currentTimeMillis();
 				System.out.println("\nTime to process: " + ((end - start)) + "ms");
 				System.out.println("----------------------------\n");
@@ -112,12 +124,28 @@ public class Lab1
 		}
 	}
 	
-	public static void MultipleThreadSim(ArrayList<String> fname)
+	public static void MultipleThreadSim(ArrayList<String> fName)
 	{
-		
+		for(String file : fName)
+		{
+			try
+			{
+				Path path = Paths.get(file);
+				long lines = Files.lines(path).count();
+				System.out.println("File: " + file + " has " + lines + " line(s)");
+			}
+			catch (NoSuchFileException e) 
+			{
+				System.out.println("Error: file " + file + " does not exists");
+			}
+			catch(IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
 	}
 	
-	public static void MultipleThreadSeq(ArrayList<String> fname)
+	public static void MultipleThreadSeq(ArrayList<String> fName)
 	{
 		
 	}
