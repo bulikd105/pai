@@ -87,7 +87,7 @@ public class Lab1
 				MultipleThreadSeq(fileList);
 				
 				end = System.currentTimeMillis();
-				System.out.println("\nTime to process: " + ((end - start)) + "ms");
+				System.out.println("Time to process: " + ((end - start)) + "ms");
 				System.out.println("----------------------------\n");
 				
 			}
@@ -109,7 +109,10 @@ public class Lab1
 		{
 			try
 			{
+				// Read filepath
 				Path path = Paths.get(file);
+				
+				// Count lines in this file
 				long lines = Files.lines(path).count();
 				System.out.println("File: " + file + " has " + lines + " line(s)");
 			}
@@ -126,17 +129,30 @@ public class Lab1
 	
 	public static void MultipleThreadSim(ArrayList<String> fName)
 	{
-
+		
 	}
 	
 	public static void MultipleThreadSeq(ArrayList<String> fName)
 	{
-		ArrayList<Lab1Threads> threadList = new ArrayList<Lab1Threads>();
+		ArrayList<CustomThread> threadList = new ArrayList<CustomThread>();
+		String threadName;
 
 		for(String file : fName)
 		{
-			Lab1Threads threads = new Lab1Threads(file);
-
+			// Create name for thread
+			threadName = ("Thread: " + file);
+			
+			// Create thread for each file
+			CustomThread thread = new CustomThread(threadName,file);
+			
+			// Add each thread to list
+			threadList.add(thread);
+		}
+		
+		for(CustomThread thread : threadList)
+		{
+			thread.startSeq();
+			System.out.println("----------------------------");
 		}
 	}
 }
