@@ -18,6 +18,7 @@ import java.util.ArrayList;
  * Utworz wersje programu, ktora odczytuje pliki nie jednoczesnie a sekwencyjnie. 
  * Porownaj wydajnosc wielowatkowego i jednowatkowego programu uzywajac System.currentTimeMillis() do okreslenia czasu wykonania. 
  * Porownania dokonaj dla dwoch, trzech i pieciu plikow.
+ * 
  */
 
 public class Lab1 
