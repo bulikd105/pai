@@ -28,7 +28,8 @@ public class Lab1
 		if (args.length > 0)
 		{
 			//Declare variable to measure time
-			long start, end;
+			long t1, t2, t3;
+			long start = 0, end = 0;
 			
 			// Create list for proper filenames
 			ArrayList<String> fileList = new ArrayList<String>();
@@ -55,40 +56,38 @@ public class Lab1
 				System.out.println("----------------------------");
 				
 				// Single thread version
-				start = 0;
-				end = 0;
 				start = System.currentTimeMillis();
 				System.out.println("\nSingle Thread started\n");
 				
 				SingleThread(fileList);
 				
 				end = System.currentTimeMillis();
-				System.out.println("\nTime to process: " + ((end - start)) + "ms");
+				t1 = end - start;
 				System.out.println("----------------------------\n");
 				
 				// Simultanouse multi thread version
-				start = 0;
-				end = 0;
 				start = System.currentTimeMillis();
-				System.out.println("\nMultiple Thread Simultanouse started\n");
+				System.out.println("Multiple Thread Simultanouse started\n");
 				
 				MultipleThreadSim(fileList);
 				
 				end = System.currentTimeMillis();
-				System.out.println("\nTime to process: " + ((end - start)) + "ms");
+				t2 = end - start;
 				System.out.println("----------------------------\n");
 				
 				// Sequence multi thread version
-				start = 0;
-				end = 0;
 				start = System.currentTimeMillis();
-				System.out.println("\nMultiple Thread Sequence started\n");
+				System.out.println("Multiple Thread Sequence started\n");
 				
 				MultipleThreadSeq(fileList);
 				
 				end = System.currentTimeMillis();
-				System.out.println("Time to process: " + ((end - start)) + "ms");
+				t3 = end - start;
 				System.out.println("----------------------------\n");
+				
+				System.out.println("Time for Single Thread: " + t1);
+				System.out.println("Time for Multiple Thread Simultanouse: " + t2);
+				System.out.println("Time for Multiple Thread Sequence: " + t3);
 				
 			}
 			else
@@ -129,7 +128,33 @@ public class Lab1
 	
 	public static void MultipleThreadSim(ArrayList<String> fName)
 	{
+		ArrayList<CustomThread> threadList = new ArrayList<CustomThread>();
+		String threadName;
+
+		for(String file : fName)
+		{
+			// Create name for thread
+			threadName = ("Thread: " + file);
+			
+			// Create thread for each file
+			CustomThread thread = new CustomThread(threadName,file);
+			
+			// Add each thread to list
+			threadList.add(thread);
+		}
 		
+		System.out.println("\n");
+		
+		// Start threads
+		for(CustomThread thread : threadList)
+		{
+			thread.ThreadStart();
+		}
+		
+		for(CustomThread thread : threadList)
+		{
+			thread.ThreadJoin();
+		}
 	}
 	
 	public static void MultipleThreadSeq(ArrayList<String> fName)
@@ -149,10 +174,12 @@ public class Lab1
 			threadList.add(thread);
 		}
 		
+		System.out.println("\n");
+		
 		for(CustomThread thread : threadList)
 		{
-			thread.startSeq();
-			System.out.println("----------------------------");
+			thread.ThreadStart();
+			thread.ThreadJoin();
 		}
 	}
 }

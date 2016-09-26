@@ -24,6 +24,7 @@ public class CustomThread implements Runnable
 	public void run() 
 	{
 		System.out.println("Running " +  threadName );
+		
 		try 
 		{
 			// Read filepath
@@ -36,44 +37,42 @@ public class CustomThread implements Runnable
 		}
 		catch (NoSuchFileException e) 
 		{
-			System.out.println("Error: file " + fileName + " does not exists");
+			System.out.println("Error: file " + fileName + " does not exists\n");
 		}
 		catch(IOException e)
 		{
 			e.printStackTrace();
 		}
 
-		System.out.println(threadName + " exiting.");
+		System.out.println(threadName + " exiting.\n");
 	}
 	
-	// Method to start thread
-	public void startSeq()
+	// Start thread
+	public void ThreadStart()
 	{
-		System.out.println("\nStarting " +  threadName );
+		System.out.println("Starting " +  threadName);
 		
 		// Check if there is no started thread for this object
 		if(t == null) 
 		{
-			try 
-			{
-				// Create new thread
-				t = new Thread (this, threadName);
-				
-				// Start thread
-				t.start();
-				
-				// Join thread with others
-				t.join();
-			} 
-			catch (InterruptedException e) 
-			{
-				e.printStackTrace();
-			}
+			// Create new thread
+			t = new Thread (this, threadName);
+			
+			// Start thread
+			t.start();
 		}
 	}
 	
-	public void startSim()
+	// Join thread
+	public void ThreadJoin()
 	{
-		
+		try 
+		{
+			t.join();
+		} 
+		catch (InterruptedException e) 
+		{
+			e.printStackTrace();
+		}
 	}
 }
