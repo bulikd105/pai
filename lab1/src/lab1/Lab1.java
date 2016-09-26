@@ -10,28 +10,71 @@ package lab1;
 
 public class Lab1 
 {
-	public static void main(String[] args)
+	public void main(String[] args)
 	{
 		// Check for input with filenames
 		if (args.length > 0)
 		{
+			// Create table with proper filenames
+			String fileList[] = new String[args.length];
+			int i = 0;
+			
 			// Loop on each file name
 			for(String fileName : args)
 			{		
 				// Check if file is a "*.txt" file
 				if(fileName.substring(fileName.length(), 3).equals("txt"))
 				{
-					
+					fileList[i] = fileName;
+					i++;
 				}
 				else 
 				{
 					System.out.println("This file: " + fileName + "is not a *.txt file\n");
 				}
 			}
+			
+			if(fileList.length > 0)
+			{
+				// Single thread version
+				System.out.println("Single Thread\n");
+				SignleThread(fileList);
+				System.out.println("----------------------------\n");
+				
+				// Simultanouse multi thread version
+				System.out.println("Multiple Thread Simultanouse\n");
+				MultipleThreadSim(fileList);
+				System.out.println("----------------------------\n");
+				
+				// Sequence multi thread version
+				System.out.println("Multiple Thread Sequence\n");
+				MultipleThreadSeq(fileList);
+				System.out.println("----------------------------\n");
+			}
+			else
+			{
+				System.out.println("No correct files were given in command line\n");
+			}
+
 		}
 		else
 		{
-			System.out.println("No files was given in command line\n");
+			System.out.println("No files were given in command line\n");
 		}
+	}
+	
+	public void SignleThread(String[] fName)
+	{
+		
+	}
+	
+	public void MultipleThreadSim(String[] fname)
+	{
+		
+	}
+	
+	public void MultipleThreadSeq(String[] fname)
+	{
+		
 	}
 }
