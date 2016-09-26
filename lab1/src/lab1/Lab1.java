@@ -1,6 +1,5 @@
 package lab1;
 
-import java.awt.List;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
@@ -23,16 +22,20 @@ public class Lab1
 		// Check for input with filenames
 		if (args.length > 0)
 		{
-			// Create table with proper filenames
+			//Declare variable to measure time
+			long start, end;
+			
+			// Create list for proper filenames
 			ArrayList<String> fileList = new ArrayList<String>();
 			
 			// Loop on each file name
-			System.out.println("Check filenames for incorrect ones");
+			System.out.println("Check filenames for incorrect ones\n");
 			for(String fileName : args)
 			{
 				// Check if file is a "*.txt" file
 				if(fileName.length() > 3 && fileName.substring(fileName.length()-3, fileName.length()).equals("txt"))
 				{
+					// Add file to the list
 					fileList.add(fileName);
 					System.out.println("Correct filename: " + fileName);
 				}
@@ -44,20 +47,37 @@ public class Lab1
 			
 			if(!fileList.isEmpty())
 			{
+				
 				// Single thread version
-				System.out.println("\nSingle Thread started");
+				start = 0;
+				end = 0;
+				start = System.currentTimeMillis();
+				System.out.println("\nSingle Thread started\n");
 				SingleThread(fileList);
+				end = System.currentTimeMillis();
+				System.out.println("\nTime to process: " + ((end - start)) + "ms");
 				System.out.println("----------------------------\n");
 				
 				// Simultanouse multi thread version
-				System.out.println("\nMultiple Thread Simultanouse started");
+				start = 0;
+				end = 0;
+				start = System.currentTimeMillis();
+				System.out.println("\nMultiple Thread Simultanouse started\n");
 				MultipleThreadSim(fileList);
+				end = System.currentTimeMillis();
+				System.out.println("\nTime to process: " + ((end - start)) + "ms");
 				System.out.println("----------------------------\n");
 				
 				// Sequence multi thread version
-				System.out.println("\nMultiple Thread Sequence started");
+				start = 0;
+				end = 0;
+				start = System.currentTimeMillis();
+				System.out.println("\nMultiple Thread Sequence started\n");
 				MultipleThreadSeq(fileList);
-				System.out.println("----------------------------");
+				end = System.currentTimeMillis();
+				System.out.println("\nTime to process: " + ((end - start)) + "ms");
+				System.out.println("----------------------------\n");
+				
 			}
 			else
 			{
@@ -79,7 +99,7 @@ public class Lab1
 			{
 				Path path = Paths.get(file);
 				long lines = Files.lines(path).count();
-				System.out.println("Lines number: " + lines);
+				System.out.println("File: " + file + " has " + lines + " line(s)");
 			}
 			catch (NoSuchFileException e) 
 			{
