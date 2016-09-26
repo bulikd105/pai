@@ -1,8 +1,12 @@
 package lab1;
 
+import java.awt.List;
+import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 /* 
  * Napisz program, ktory pobiera liste plikow z linii polecen i wyswietla liczbe wierszy kazdego z nich. 
@@ -20,38 +24,38 @@ public class Lab1
 		if (args.length > 0)
 		{
 			// Create table with proper filenames
-			String fileList[] = new String[args.length];
-			int i = 0;
+			ArrayList<String> fileList = new ArrayList<String>();
 			
 			// Loop on each file name
+			System.out.println("Check filenames for incorrect ones");
 			for(String fileName : args)
 			{
 				// Check if file is a "*.txt" file
-				if(fileName.substring(fileName.length()-3, fileName.length()).equals("txt"))
+				if(fileName.length() > 3 && fileName.substring(fileName.length()-3, fileName.length()).equals("txt"))
 				{
-					fileList[i] = fileName;
-					i++;
+					fileList.add(fileName);
+					System.out.println("Correct filename: " + fileName);
 				}
 				else 
 				{
-					System.out.println("This file: " + fileName + "is not a *.txt file\n");
+					System.out.println("Incorrect filename: " + fileName);
 				}
 			}
 			
-			if(fileList.length > 0)
+			if(!fileList.isEmpty())
 			{
 				// Single thread version
-				System.out.println("Single Thread");
+				System.out.println("\nSingle Thread started");
 				SingleThread(fileList);
 				System.out.println("----------------------------\n");
 				
 				// Simultanouse multi thread version
-				System.out.println("Multiple Thread Simultanouse");
+				System.out.println("\nMultiple Thread Simultanouse started");
 				MultipleThreadSim(fileList);
 				System.out.println("----------------------------\n");
 				
 				// Sequence multi thread version
-				System.out.println("Multiple Thread Sequence");
+				System.out.println("\nMultiple Thread Sequence started");
 				MultipleThreadSeq(fileList);
 				System.out.println("----------------------------");
 			}
@@ -67,7 +71,7 @@ public class Lab1
 		}
 	}
 	
-	public static void SingleThread(String[] fName)
+	public static void SingleThread(ArrayList<String> fName)
 	{
 		for(String file : fName)
 		{
@@ -77,19 +81,23 @@ public class Lab1
 				long lines = Files.lines(path).count();
 				System.out.println("Lines number: " + lines);
 			}
-			catch (Exception e) 
+			catch (NoSuchFileException e) 
+			{
+				System.out.println("Error: file " + file + " does not exists");
+			}
+			catch(IOException e)
 			{
 				e.printStackTrace();
 			}
 		}
 	}
 	
-	public static void MultipleThreadSim(String[] fname)
+	public static void MultipleThreadSim(ArrayList<String> fname)
 	{
 		
 	}
 	
-	public static void MultipleThreadSeq(String[] fname)
+	public static void MultipleThreadSeq(ArrayList<String> fname)
 	{
 		
 	}
