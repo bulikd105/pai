@@ -47,7 +47,9 @@ public class Lab2
 				String host = siteUrl.getHost();
 				InetAddress address = InetAddress.getByName(host);
 				Map<String, List<String>> map = siteUrlConnection.getHeaderFields();
-				Map<String, String> connParameters = new HashMap<String,String>();	
+				Map<String, String> connParameters = new HashMap<String,String>();
+				
+				map.put("URL - ", siteUrl.toString());
 				
 				connParameters.put("URL - ",siteUrl.toString());
 				connParameters.put("Protocol - ",siteUrl.getProtocol());
@@ -70,8 +72,8 @@ public class Lab2
 				BufferedWriter bw = new BufferedWriter(fw);
 
 				
-				// Wyswietlanie parametrow polaczenia
-				System.out.println("Parametry po³¹czenia:");
+				// Zapisanie parametrow polaczenia
+				bw.write("Parametry po³¹czenia:\n");
 				
 				for(Map.Entry<String, String> entry : connParameters.entrySet())
 				{
@@ -87,27 +89,20 @@ public class Lab2
 						bw.write(entry.getKey() + "empty\n");
 					}
 				}
-				
-				
-				
+								
 				for (Map.Entry<String, List<String>> entry : map.entrySet()) 
 				{
 					bw.write(entry.getKey() + " - " + entry.getValue() + "\n");
 				}
 
 				
-				// Pobierania naglowka strony
-				
-				
-				
-				
-				
 				// Zczytanie calej zawartosci strony
 				BufferedReader br = new BufferedReader(new InputStreamReader(siteUrlConnection.getInputStream()));
 
-				// Wyswietlenie calej zawartosci strony
+				// Zapisanie naglowka strony
 				int flag = 0;
 			    String inputLine;
+			    bw.write("Naglowek strony: \n");
 			    while ((inputLine = br.readLine()) != null) 
 			    {
 			    	if(inputLine.contains("<head>"))
@@ -127,6 +122,8 @@ public class Lab2
 				br.close();
 
 				System.out.println("Done");
+				
+				
 				
 			} 
 			catch (MalformedURLException e ) 
