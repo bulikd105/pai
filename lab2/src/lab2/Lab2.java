@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /* 
@@ -35,33 +37,52 @@ public class Lab2
 				// Deklaracja i utworzenie polaczenia ze stron¹
 				URL siteUrl = new URL(args[0]);
 				URLConnection siteUrlConnection = siteUrl.openConnection();
+				siteUrlConnection.setConnectTimeout(20);
 				siteUrlConnection.connect();
 				
 				// Pobieranie parametrów po³¹czenia
 				String host = siteUrl.getHost();
 				InetAddress address = InetAddress.getByName(host);
-				String ipAddress = address.getHostAddress();
-
+				Map<String, List<String>> map = siteUrlConnection.getHeaderFields();
+				Map<String, String> connParameters = new HashMap<String,String>();	
 				
+				connParameters.put("URL - ",siteUrl.toString());
+				connParameters.put("Protocol - ",siteUrl.getProtocol());
+				connParameters.put("Authority - ",siteUrl.getAuthority());
+				connParameters.put("Host - ",siteUrl.getHost());
+				connParameters.put("Default port - ", ""+siteUrl.getDefaultPort());
+				connParameters.put("Query - ",  siteUrl.getQuery());
+				connParameters.put("Ref - ",  siteUrl.getRef());
+				connParameters.put("IP address - ",  address.getHostAddress());
+				connParameters.put("Address - ", address.getHostName());
 				
-				
-
-				Map<String,String> connParameters = new HashMap<String,String>();
-				connParameters.put("URL is ", siteUrl.toString());
-				connParameters.put("Protocol is ", siteUrl.getProtocol());
-				connParameters.put("Authority is ", siteUrl.getAuthority());
-				connParameters.put("File name is ", siteUrl.getFile());
-				connParameters.put("Host is ", siteUrl.getHost());
-				connParameters.put("Path is ", siteUrl.getPath());
-				connParameters.put("Port is ", ""+siteUrl.getPort());
-				connParameters.put("Default port is ", ""+siteUrl.getDefaultPort());
-				connParameters.put("Query is ", siteUrl.getQuery());
-				connParameters.put("Ref is ", siteUrl.getRef());
+				// Wyswietlanie parametrow polaczenia
+				System.out.println("Parametry po³¹czenia:");
 				
 				for(Map.Entry<String, String> entry : connParameters.entrySet())
 				{
-					System.out.println(entry.getKey() + "" + entry.getValue());
+					try
+					{
+						if(!entry.getValue().equals(null) || !entry.getValue().equals(""))
+						{
+							System.out.println(entry.getKey() + "" + entry.getValue());
+						}
+					}
+					catch(NullPointerException e)
+					{
+						System.out.println(entry.getKey() + "empty");
+					}
 				}
+				
+				
+				
+				for (Map.Entry<String, List<String>> entry : map.entrySet()) 
+				{
+					System.out.println(entry.getKey() + " - " + entry.getValue());
+				}
+
+				
+				// Pobierania naglowka strony
 				
 				
 				
@@ -71,24 +92,26 @@ public class Lab2
 				BufferedReader br = new BufferedReader(new InputStreamReader(siteUrlConnection.getInputStream()));
 
 				// Wyswietlenie calej zawartosci strony
-			    String inputLine;
+/*			    String inputLine;
 			    while ((inputLine = br.readLine()) != null) 
 			    {
 			    	System.out.println(inputLine);
 			    }
-			    br.close();
+			    br.close();*/
 				
 				
 			} 
 			catch (MalformedURLException e ) 
 			{
 				System.out.println("Error: Validate URL address\n");
-				e.printStackTrace();
+			}
+			catch (SocketTimeoutException e)
+			{
+				System.out.println("Error: Connection timed out\n");
 			}
 			catch (IOException e)
 			{
 				System.out.println("Error: Validate URL address\n");
-				e.printStackTrace();
 			}
 		}
 		else
