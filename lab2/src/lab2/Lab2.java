@@ -3,9 +3,12 @@ package lab2;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
+import java.util.Map;
 
 /* 
  * @Autor 
@@ -28,11 +31,41 @@ public class Lab2
 		if(args.length == 1)
 		{
 			try 
-			{
+			{	
 				// Deklaracja i utworzenie polaczenia ze stron¹
 				URL siteUrl = new URL(args[0]);
 				URLConnection siteUrlConnection = siteUrl.openConnection();
 				siteUrlConnection.connect();
+				
+				// Pobieranie parametrów po³¹czenia
+				String host = siteUrl.getHost();
+				InetAddress address = InetAddress.getByName(host);
+				String ipAddress = address.getHostAddress();
+
+				
+				
+				
+
+				Map<String,String> connParameters = new HashMap<String,String>();
+				connParameters.put("URL is ", siteUrl.toString());
+				connParameters.put("Protocol is ", siteUrl.getProtocol());
+				connParameters.put("Authority is ", siteUrl.getAuthority());
+				connParameters.put("File name is ", siteUrl.getFile());
+				connParameters.put("Host is ", siteUrl.getHost());
+				connParameters.put("Path is ", siteUrl.getPath());
+				connParameters.put("Port is ", ""+siteUrl.getPort());
+				connParameters.put("Default port is ", ""+siteUrl.getDefaultPort());
+				connParameters.put("Query is ", siteUrl.getQuery());
+				connParameters.put("Ref is ", siteUrl.getRef());
+				
+				for(Map.Entry<String, String> entry : connParameters.entrySet())
+				{
+					System.out.println(entry.getKey() + "" + entry.getValue());
+				}
+				
+				
+				
+				
 				
 				// Zczytanie calej zawartosci strony
 				BufferedReader br = new BufferedReader(new InputStreamReader(siteUrlConnection.getInputStream()));
@@ -60,7 +93,7 @@ public class Lab2
 		}
 		else
 		{
-			System.out.println("Wrong number of arguments.\n Please verify\n");
+			System.out.println("Wrong number of arguments.\nPlease verify\n");
 		}
 	}
 }
