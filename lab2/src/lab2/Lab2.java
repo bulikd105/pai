@@ -1,6 +1,7 @@
 package lab2;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
@@ -37,7 +38,7 @@ public class Lab2
 				// Deklaracja i utworzenie polaczenia ze stron¹
 				URL siteUrl = new URL(args[0]);
 				URLConnection siteUrlConnection = siteUrl.openConnection();
-				siteUrlConnection.setConnectTimeout(20);
+				siteUrlConnection.setConnectTimeout(40);
 				siteUrlConnection.connect();
 				
 				// Pobieranie parametrów po³¹czenia
@@ -55,6 +56,13 @@ public class Lab2
 				connParameters.put("Ref - ",  siteUrl.getRef());
 				connParameters.put("IP address - ",  address.getHostAddress());
 				connParameters.put("Address - ", address.getHostName());
+				
+				// Utworzenie pliku do zapisu danych
+				File file = new File ("Dane.txt");
+				if (!file.exists()) 
+				{
+					file.createNewFile();
+				}
 				
 				// Wyswietlanie parametrow polaczenia
 				System.out.println("Parametry po³¹czenia:");
@@ -92,12 +100,24 @@ public class Lab2
 				BufferedReader br = new BufferedReader(new InputStreamReader(siteUrlConnection.getInputStream()));
 
 				// Wyswietlenie calej zawartosci strony
-/*			    String inputLine;
+				int flag = 0;
+			    String inputLine;
 			    while ((inputLine = br.readLine()) != null) 
 			    {
-			    	System.out.println(inputLine);
+			    	if(inputLine.contains("<head>"))
+			    	{
+			    		flag = 1;
+			    	}
+			    	if(flag == 1)
+			    	{
+			    		System.out.println(inputLine);
+			    	}
+			    	if(inputLine.contains("</head>") && flag == 1)
+			    	{
+			    		flag = 2;
+			    	}
 			    }
-			    br.close();*/
+			    br.close();
 				
 				
 			} 
