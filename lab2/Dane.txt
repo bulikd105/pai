@@ -1,30 +1,5 @@
-Address - www.debian.org
-Authority - www.debian.org
-Query - empty
-URL - https://www.debian.org
-Default port - 443
-Protocol - https
-Ref - empty
-IP address - 5.153.231.4
-Host - www.debian.org
-Keep-Alive - [timeout=5, max=100]
-null - [HTTP/1.1 200 OK]
-Server - [Apache]
-Content-Location - [index.en.html]
-Connection - [Keep-Alive]
-Last-Modified - [Tue, 27 Sep 2016 03:28:49 GMT]
-Date - [Tue, 27 Sep 2016 07:12:44 GMT]
-Accept-Ranges - [bytes]
-Strict-Transport-Security - [max-age=15552000]
-Cache-Control - [max-age=86400]
-ETag - ["3b1a-53d74d7cb091c"]
-Vary - [negotiate,accept-language,Accept-Encoding]
-Expires - [Wed, 28 Sep 2016 07:12:44 GMT]
-Content-Length - [15130]
-Content-Language - [en]
-X-Clacks-Overhead - [GNU Terry Pratchett]
-TCN - [choice]
-Content-Type - [text/html]
+Parametry po³¹czenia:
+Naglowek strony: 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>Debian -- The Universal Operating System </title>

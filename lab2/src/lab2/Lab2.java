@@ -48,9 +48,7 @@ public class Lab2
 				InetAddress address = InetAddress.getByName(host);
 				Map<String, List<String>> map = siteUrlConnection.getHeaderFields();
 				Map<String, String> connParameters = new HashMap<String,String>();
-				
-				map.put("URL - ", siteUrl.toString());
-				
+								
 				connParameters.put("URL - ",siteUrl.toString());
 				connParameters.put("Protocol - ",siteUrl.getProtocol());
 				connParameters.put("Authority - ",siteUrl.getAuthority());
@@ -61,68 +59,12 @@ public class Lab2
 				connParameters.put("IP address - ",  address.getHostAddress());
 				connParameters.put("Address - ", address.getHostName());
 				
-				// Utworzenie pliku do zapisu danych
-				File file = new File ("Dane.txt");
-				if (!file.exists()) 
-				{
-					file.createNewFile();
-				}
-				
-				FileWriter fw = new FileWriter(file.getAbsoluteFile());
-				BufferedWriter bw = new BufferedWriter(fw);
 
-				
-				// Zapisanie parametrow polaczenia
-				bw.write("Parametry po³¹czenia:\n");
-				
-				for(Map.Entry<String, String> entry : connParameters.entrySet())
-				{
-					try
-					{
-						if(!entry.getValue().equals(null) || !entry.getValue().equals(""))
-						{
-							bw.write(entry.getKey() + "" + entry.getValue() + "\n");
-						}
-					}
-					catch(NullPointerException e)
-					{
-						bw.write(entry.getKey() + "empty\n");
-					}
-				}
-								
-				for (Map.Entry<String, List<String>> entry : map.entrySet()) 
-				{
-					bw.write(entry.getKey() + " - " + entry.getValue() + "\n");
-				}
-
-				
 				// Zczytanie calej zawartosci strony
 				BufferedReader br = new BufferedReader(new InputStreamReader(siteUrlConnection.getInputStream()));
-
-				// Zapisanie naglowka strony
-				int flag = 0;
-			    String inputLine;
-			    bw.write("Naglowek strony: \n");
-			    while ((inputLine = br.readLine()) != null) 
-			    {
-			    	if(inputLine.contains("<head>"))
-			    	{
-			    		flag = 1;
-			    	}
-			    	if(flag == 1)
-			    	{
-			    		bw.write(inputLine + "\n");
-			    	}
-			    	if(inputLine.contains("</head>") && flag == 1)
-			    	{
-			    		flag = 2;
-			    	}
-			    }
-			    bw.close();
-				br.close();
-
-				System.out.println("Done");
 				
+				WriteFile(br);
+				ReadContent(br);
 				
 				
 			} 
@@ -143,5 +85,88 @@ public class Lab2
 		{
 			System.out.println("Wrong number of arguments.\nPlease verify\n");
 		}
+	}
+	
+	public static void WriteFile(BufferedReader br)
+	{
+
+		try 
+		{
+			// Utworzenie pliku do zapisu danych
+			File file = new File("Dane.txt");
+			if (!file.exists()) 
+			{
+					file.createNewFile();
+			}
+			
+			FileWriter fw = new FileWriter(file.getAbsoluteFile());
+			BufferedWriter bw = new BufferedWriter(fw);
+			
+			// Zapisanie parametrow polaczenia
+			bw.write("Parametry po³¹czenia:\n");
+			
+/*			for(Map.Entry<String, String> entry : connParameters.entrySet())
+			{
+				try
+				{
+					if(!entry.getValue().equals(null) || !entry.getValue().equals(""))
+					{
+						bw.write(entry.getKey() + "" + entry.getValue() + "\n");
+					}
+				}
+				catch(NullPointerException e)
+				{
+					bw.write(entry.getKey() + "empty\n");
+				}
+			}
+							
+			for (Map.Entry<String, List<String>> entry : map.entrySet()) 
+			{
+				bw.write(entry.getKey() + " - " + entry.getValue() + "\n");
+			}*/
+			
+			// Zapisanie naglowka strony
+			boolean flag = false;
+		    String inputLine;
+		    
+		    bw.write("Naglowek strony: \n");
+		    
+		    while ((inputLine = br.readLine()) != null) 
+		    {
+		    	// Szukamy poczatku sekcji header
+		    	if(inputLine.contains("<head>"))
+		    	{
+		    		flag = true;
+		    	}
+		    	
+		    	// Zapisujemy wszystko co sie znajduje w sekcji header
+		    	if(flag == true)
+		    	{
+		    		bw.write(inputLine + "\n");
+		    	}
+		    	
+		    	// Szukamy konca sekcji header
+		    	if(inputLine.contains("</head>") && flag == true)
+		    	{
+		    		flag = false;
+		    		break;
+		    	}
+		    }
+		    
+		    bw.close();
+			br.close();
+
+			System.out.println("Plik zapisany poprawnie");
+			
+		} 
+		catch (IOException e) 
+		{
+			System.out.println("Blad podczas tworzenia pliku");
+		}
+	}
+	
+	public static void ReadContent(BufferedReader br)
+	{
+		
 	}
 }
