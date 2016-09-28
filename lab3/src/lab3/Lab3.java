@@ -1,5 +1,8 @@
 package lab3;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+
 /* 
  * @Autor 
  * Damian Dworak
@@ -11,8 +14,29 @@ package lab3;
 
 public class Lab3 
 {
-	public static void main(String[] args) 
+	public static void main(String[] args) throws Exception
 	{
+		// Deklaracja portu
+		int port = 6080;
+		int threadNum = 0;
+		
+		// Utworzenie server socket
+		ServerSocket serverSocket = new ServerSocket(port);
+		System.out.println("Utworzono server na porcie: " + port);
+		
+		// Uruchomienie nieskonczonej petli dla serwera
+		try
+		{
+			while(true)
+			{
+				Server server = new Server(serverSocket.accept(), threadNum++);
+			}
+		}
+		finally
+		{
+			serverSocket.close();
+		}
+
 
 	}
 }
