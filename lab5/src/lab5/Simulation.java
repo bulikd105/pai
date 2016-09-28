@@ -44,6 +44,9 @@ public class Simulation
 		
 		Thread t1 = new Thread(new Deadlock(dLock1, dLock2), "t1");
         Thread t2 = new Thread(new Deadlock(dLock2, dLock1), "t2");
+        
+        t1.start();
+        t2.start();
 		
 	}
 

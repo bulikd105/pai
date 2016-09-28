@@ -38,7 +38,7 @@ public class Deadlock implements Runnable
 	{
 		try 
 		{
-			Thread.sleep(30000);
+			Thread.sleep(5000);
 		} 
 		catch (InterruptedException e) 
 		{
