@@ -16,12 +16,15 @@ public class Client
 		{
 			Socket socket = new Socket(serverName, port);
 			
-			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-			BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			String answer = input.readLine();
- 
-			System.out.println(answer);
- 
+			while(true)
+			{
+				PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+				BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				String answer = input.readLine();
+	 
+				System.out.println(answer);
+			}
+			
 		}
 		catch(Exception e)
 		{
