@@ -2,7 +2,7 @@ PARAMETRY STRONY:
 Address - www.debian.org
 Authority - www.debian.org
 Query - null
-URL - https://www.debian.org
+URL - https://www.debian.org/
 Default port - 443
 Protocol - https
 Ref - null
@@ -10,6 +10,7 @@ IP address - 130.89.148.14
 Host - www.debian.org
 
 NAG£ÓWEK STRONY: 
+<head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Debian -- The Universal Operating System </title>
 <link rev="made" href="mailto:webmaster@debian.org">
@@ -21,4 +22,4 @@ NAG£ÓWEK STRONY:
 <meta name="HandheldFriendly" content="true"><link rel="alternate" type="application/rss+xml" title="Debian News" href="News/news"><link rel="alternate" type="application/rss+xml" title="Debian Project News" href="News/weekly/dwn"><link rel="alternate" type="application/rss+xml" title="Debian Security Advisories (titles only)" href="security/dsa"><link rel="alternate" type="application/rss+xml" title="Debian Security Advisories (summaries)" href="security/dsa-long"><link href="./debhome.css" rel="stylesheet" type="text/css">
 <link href="./debian-en.css" rel="stylesheet" type="text/css" media="all">
 <link rel="shortcut icon" href="favicon.ico">
-<meta name="Keywords" content="debian, GNU, linux, unix, open source, free, DFSG"><link rel="search" type="application/opensearchdescription+xml" title="Debian website search" href="./search.en.xml">
+<meta name="Keywords" content="debian, GNU, linux, unix, open source, free, DFSG"><link rel="search" type="application/opensearchdescription+xml" title="Debian website search" href="./search.en.xml"></head>

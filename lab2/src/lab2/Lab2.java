@@ -76,8 +76,7 @@ public class Lab2
 				//Uruchomienie metod do czytania zawartosci strony
 				ReadContent(contentPage);
 				WriteFile(contentPage,connParameters);
-				
-				
+								
 			} 
 			catch (MalformedURLException e ) 
 			{
@@ -113,7 +112,7 @@ public class Lab2
 			{
 				if(regexMatcher.group().length() != 0) 
 				{
-					header = regexMatcher.group(1).trim();
+					header = regexMatcher.group().trim();
 				}              
 			}
 			
@@ -158,46 +157,61 @@ public class Lab2
 	public static void ReadContent(StringBuilder contentPage)
 	{
 		ArrayList<String> links = new ArrayList<String>();
-		String linkPattern =  "(?i)<a href=\"(.*?)\">.*?</a>";
+		String linkPattern =  "(?i)<a href=\"(.*?)\">.*?</a>"; // All links
+		String linkPattern2 =  "(?i)<a href=\"(http.*?)\">.*?</a>"; //Only http
 		
 		ArrayList<String> emails = new ArrayList<String>();
-		String emailPattern =  "[A-Z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+		String emailPattern = "[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+";
 		
 		Matcher regexMatcher; 
 		int i = 1, j=1;
 		
-		regexMatcher = Pattern.compile(linkPattern).matcher(contentPage);
-		
-		// Wyszukiwanie wzorca i zapisanie do go zmiennej
+		// Wyszukiwanie linkow
+		regexMatcher = Pattern.compile(linkPattern2).matcher(contentPage);
 		while(regexMatcher.find())
 		{
 		    if(regexMatcher.group().length() != 0) 
 		    {
-	            links.add(regexMatcher.group(1).trim());
+	            links.add(regexMatcher.group(1));
 		    }
 		}
 		
-		System.out.println("LINKI NA STRONIE:\n");
-		for(String link : links)
+		if(links.isEmpty())
 		{
-			System.out.println(i + " - " + link);
-			i++;
+			System.out.println("Na tej stronie nie ma linkow\n");
+		}
+		else
+		{
+			System.out.println("LINKI NA STRONIE:\n");
+			for(String link : links)
+			{
+				System.out.println(i + " - " + link);
+				i++;
+			}
 		}
 
+		// Wyszukiwanie emaili
 		regexMatcher = Pattern.compile(emailPattern).matcher(contentPage);
 		while(regexMatcher.find())
 		{
 		    if(regexMatcher.group().length() != 0) 
 		    {
-		    	emails.add(regexMatcher.group(1).trim());
+		    	emails.add(regexMatcher.group());
 		    }
 		}
 		
-		System.out.println("\nE-MAIL'E NA STRONIE:\n");
-		for(String email : emails)
+		if(emails.isEmpty())
 		{
-			System.out.println(j + " - " + email);
-			j++;
+			System.out.println("\nNa tej stronie nie ma maili\n");
+		}
+		else
+		{
+			System.out.println("\nE-MAIL'E NA STRONIE:\n");
+			for(String email : emails)
+			{
+				System.out.println(j + " - " + email);
+				j++;
+			}
 		}
 	}
 }
