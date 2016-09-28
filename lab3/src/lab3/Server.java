@@ -25,15 +25,33 @@ public class Server implements Runnable
 		{
             BufferedReader in = new BufferedReader( new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
             
             while(true)
             {
-            	
+            	// Czekaj na dane i zaczytuj wszystkie linie
+            	String userInput;
+            	while ((userInput = stdIn.readLine()) != null) 
+            	{
+            	    out.println(userInput);
+            	    System.out.println("Watek: " + threadNum + " - echo: " + in.readLine());
+            	}
             }
         } 
 		catch (IOException e) 
 		{
-           
+           System.out.println("Watek: " + threadNum + " wyrzucil blad: " + e);
         } 
+		finally
+		{
+			try
+			{
+				socket.close();
+			}
+			catch (IOException e) 
+			{
+				 System.out.println("Watek: " + threadNum + " nie chce sie zamknac");
+			}
+		}
 	}
 }
