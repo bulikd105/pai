@@ -71,6 +71,7 @@ public class Lab2
 				while ((contentLine = br.readLine()) != null) 
 			    {
 					 contentPage.append(contentLine);
+					 //contentPage.append(System.lineSeparator());
 			    }
 				br.close();
 			
@@ -100,77 +101,15 @@ public class Lab2
 	
 	public static void WriteFile(StringBuilder contentPage)
 	{
-
 		try 
 		{
-			// Utworzenie pliku do zapisu danych
-			File file = new File("Dane.txt");
-			if (!file.exists()) 
-			{
-					file.createNewFile();
-			}
-			
-			FileWriter fw = new FileWriter(file.getAbsoluteFile());
-			BufferedWriter bw = new BufferedWriter(fw);
-			String contentLine = "";
-			
-			// Zapisanie parametrow polaczenia
-			bw.write("Parametry po³¹czenia:\n");
-			
-/*			for(Map.Entry<String, String> entry : connParameters.entrySet())
-			{
-				try
-				{
-					if(!entry.getValue().equals(null) || !entry.getValue().equals(""))
-					{
-						bw.write(entry.getKey() + "" + entry.getValue() + "\n");
-					}
-				}
-				catch(NullPointerException e)
-				{
-					bw.write(entry.getKey() + "empty\n");
-				}
-			}
-							
-			for (Map.Entry<String, List<String>> entry : map.entrySet()) 
-			{
-				bw.write(entry.getKey() + " - " + entry.getValue() + "\n");
-			}*/
-			
-			// Zapisanie naglowka strony
-/*			boolean flag = false;
-		    String inputLine;
-		    
-		    bw.write("Naglowek strony: \n");
-		    
-		    while ((inputLine = br.readLine()) != null) 
-		    {
-		    	// Szukamy poczatku sekcji header
-		    	if(inputLine.contains("<head>"))
-		    	{
-		    		flag = true;
-		    	}
-		    	
-		    	// Zapisujemy wszystko co sie znajduje w sekcji header
-		    	if(flag == true)
-		    	{
-		    		bw.write(inputLine + "\n");
-		    	}
-		    	
-		    	// Szukamy konca sekcji header
-		    	if(inputLine.contains("</head>") && flag == true)
-		    	{
-		    		flag = false;
-		    		break;
-		    	}
-		    }*/
-			
-			
+			// Deklaracjê zmiennych dla wzorca
 			String header = "";
+			String[] headerSplitted;
 			String headerPattern = "<head>(.*?)</head>";
-			
 			Matcher regexMatcher = Pattern.compile(headerPattern).matcher(contentPage);
 			
+			// Wyszukiwanie wzorca i zapisanie do go zmiennej
 			if(regexMatcher.find()) 
 			{
 				if(regexMatcher.group().length() != 0) 
@@ -179,12 +118,33 @@ public class Lab2
 				}              
 			}
 			
-			bw.write(header);
-    
-		    bw.close();
-
-			System.out.println("Plik zapisany poprawnie");
+			// Podzielenie nag³ówka na linie
+			headerSplitted = header.split("  +");
 			
+			// Utworzenie pliku do zapisu danych
+			File file = new File("Dane.txt");
+			if (!file.exists()) 
+			{
+				file.createNewFile();
+			}
+			
+			// Przygotowanie zmiennych do zapisu plików
+			FileWriter fw = new FileWriter(file.getAbsoluteFile());
+			BufferedWriter bw = new BufferedWriter(fw);
+			
+			// Zapisanie paramatrow po³¹czenia do pliku
+			
+			
+			
+			// Zapisanie nag³ówka do pliku
+			for(String line : headerSplitted)
+			{
+				bw.write(line+"\n");
+			}
+			
+		    bw.close();
+		    
+			System.out.println("Plik zapisany poprawnie");
 		} 
 		catch (IOException e) 
 		{

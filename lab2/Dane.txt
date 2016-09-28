@@ -1,2 +1,13 @@
 Parametry po³¹czenia:
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">  <title>Debian -- The Universal Operating System </title>  <link rev="made" href="mailto:webmaster@debian.org">  <meta name="Description" content="Debian is an operating system and a distribution of Free Software. It is maintained and updated through the work of many users who volunteer their time and effort.">  <meta name="Generator" content="WML 2.0.12 (16-Apr-2008)">  <meta name="Modified" content="2016-09-27 23:34:08">  <meta name="viewport" content="width=device-width">  <meta name="mobileoptimized" content="300">  <meta name="HandheldFriendly" content="true"><link rel="alternate" type="application/rss+xml" title="Debian News" href="News/news"><link rel="alternate" type="application/rss+xml" title="Debian Project News" href="News/weekly/dwn"><link rel="alternate" type="application/rss+xml" title="Debian Security Advisories (titles only)" href="security/dsa"><link rel="alternate" type="application/rss+xml" title="Debian Security Advisories (summaries)" href="security/dsa-long"><link href="./debhome.css" rel="stylesheet" type="text/css">  <link href="./debian-en.css" rel="stylesheet" type="text/css" media="all">  <link rel="shortcut icon" href="favicon.ico">  <meta name="Keywords" content="debian, GNU, linux, unix, open source, free, DFSG"><link rel="search" type="application/opensearchdescription+xml" title="Debian website search" href="./search.en.xml">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Debian -- The Universal Operating System </title>
+<link rev="made" href="mailto:webmaster@debian.org">
+<meta name="Description" content="Debian is an operating system and a distribution of Free Software. It is maintained and updated through the work of many users who volunteer their time and effort.">
+<meta name="Generator" content="WML 2.0.12 (16-Apr-2008)">
+<meta name="Modified" content="2016-09-27 23:34:08">
+<meta name="viewport" content="width=device-width">
+<meta name="mobileoptimized" content="300">
+<meta name="HandheldFriendly" content="true"><link rel="alternate" type="application/rss+xml" title="Debian News" href="News/news"><link rel="alternate" type="application/rss+xml" title="Debian Project News" href="News/weekly/dwn"><link rel="alternate" type="application/rss+xml" title="Debian Security Advisories (titles only)" href="security/dsa"><link rel="alternate" type="application/rss+xml" title="Debian Security Advisories (summaries)" href="security/dsa-long"><link href="./debhome.css" rel="stylesheet" type="text/css">
+<link href="./debian-en.css" rel="stylesheet" type="text/css" media="all">
+<link rel="shortcut icon" href="favicon.ico">
+<meta name="Keywords" content="debian, GNU, linux, unix, open source, free, DFSG"><link rel="search" type="application/opensearchdescription+xml" title="Debian website search" href="./search.en.xml">
