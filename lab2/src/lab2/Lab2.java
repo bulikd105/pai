@@ -147,7 +147,7 @@ public class Lab2
 			
 		    bw.close();
 		    
-			System.out.println("Plik zapisany poprawnie");
+			System.out.println("\nPlik zapisany poprawnie");
 		} 
 		catch (IOException e) 
 		{
@@ -164,7 +164,7 @@ public class Lab2
 		String emailPattern =  "[A-Z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
 		
 		Matcher regexMatcher; 
-		int i = 1;
+		int i = 1, j=1;
 		
 		regexMatcher = Pattern.compile(linkPattern).matcher(contentPage);
 		
@@ -173,7 +173,7 @@ public class Lab2
 		{
 		    if(regexMatcher.group().length() != 0) 
 		    {
-		            links.add(regexMatcher.group(1).trim());
+	            links.add(regexMatcher.group(1).trim());
 		    }
 		}
 		
@@ -184,18 +184,20 @@ public class Lab2
 			i++;
 		}
 
-		
-/*		regexMatcher = Pattern.compile(emailPattern).matcher(contentPage);
-		
-		// Wyszukiwanie wzorca i zapisanie do go zmiennej
-		if(regexMatcher.find()) 
+		regexMatcher = Pattern.compile(emailPattern).matcher(contentPage);
+		while(regexMatcher.find())
 		{
-			if(regexMatcher.group().length() != 0) 
-			{
-				email = regexMatcher.group(1).trim();
-			}              
+		    if(regexMatcher.group().length() != 0) 
+		    {
+		    	emails.add(regexMatcher.group(1).trim());
+		    }
 		}
-		System.out.println(email);*/
 		
+		System.out.println("\nE-MAIL'E NA STRONIE:\n");
+		for(String email : emails)
+		{
+			System.out.println(j + " - " + email);
+			j++;
+		}
 	}
 }
