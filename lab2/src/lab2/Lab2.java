@@ -13,7 +13,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -157,7 +156,7 @@ public class Lab2
 	public static void ReadContent(StringBuilder contentPage)
 	{
 		ArrayList<String> links = new ArrayList<String>();
-		String linkPattern =  "(?i)<a href=\"(.*?)\">.*?</a>"; // All links
+		//String linkPattern =  "(?i)<a href=\"(.*?)\">.*?</a>"; // All links
 		String linkPattern2 =  "(?i)<a href=\"(http.*?)\">.*?</a>"; //Only http
 		
 		ArrayList<String> emails = new ArrayList<String>();
