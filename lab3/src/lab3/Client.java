@@ -15,14 +15,32 @@ public class Client
 		try
 		{
 			Socket socket = new Socket(serverName, port);
+			PrintWriter out;
+			BufferedReader in;
+			BufferedReader stdIn;
+			
 			
 			while(true)
 			{
-				PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-				BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-				String answer = input.readLine();
+				out = new PrintWriter(socket.getOutputStream(), true);
+				in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				stdIn = new BufferedReader(new InputStreamReader(System.in));
+				
+				String answer = in.readLine();
 	 
-				System.out.println(answer);
+				
+				String userInput;
+
+				System.out.println("Welcome: " + in.readLine());
+				System.out.print("input: ");
+				while ((userInput = stdIn.readLine()) != null) 
+				{
+					out.println(userInput);
+					System.out.println("echo: " + in.readLine());
+					System.out.print("input: ");
+				}
+
+
 			}
 			
 		}
