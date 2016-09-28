@@ -17,7 +17,7 @@ public class Lab3
 	{
 		// Deklaracja portu
 		int port = 6080;
-		int threadNum = 0;
+		int threadNum = 1;
 		
 		// Utworzenie server socket
 		ServerSocket serverSocket = new ServerSocket(port);

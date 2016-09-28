@@ -30,36 +30,28 @@ public class Client
 		catch (UnknownHostException e)
 		{
 			System.out.println("Nie rozpoznaje tego adresu: " + serverName);
-			System.exit(1);
 		} 
 		catch (IOException e) 
 		{
 			System.out.println("Blad przy pobieraniu danych dla tego adresu: " + serverName);
-			System.exit(1);
-		}
-		catch(Exception e)
-		{
-			System.out.println("Blad: " + e);
-			System.exit(1);
 		}
 		
-
 		try 
 		{
 			stdIn = new BufferedReader(new InputStreamReader(System.in));
-			System.out.println("Welcome: " + in.readLine());
-			System.out.print("input: ");
+			System.out.println(in.readLine());
+			System.out.print("Klient: ");
 		
 			while ((userInput = stdIn.readLine()) != null) 
 			{
 				out.println(userInput);
-				System.out.println("echo: " + in.readLine());
-				System.out.print("input: ");
+				System.out.println("Server: " + in.readLine());
+				System.out.print("Klient: ");
 			}
 		} 
 		catch (IOException e) 
 		{
-			System.out.println("Klient, problem przy zamykaniu bufferow");
+			System.out.println("Klient, ma problem przy pobieraniu/wysylaniu danych");
 		}	
 	
 		try 
@@ -71,7 +63,7 @@ public class Client
 		} 
 		catch (IOException e) 
 		{
-			System.out.println("Klient, problem przy zamykaniu bufferow");
+			System.out.println("Klient, maproblem przy zamykaniu bufferow");
 		}	
 	}
 }

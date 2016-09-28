@@ -15,7 +15,7 @@ public class Server implements Runnable
 	{
 		this.socket = accept;
 		this.threadNum = i;
-		System.out.println("Utworzono nowy watek: " + i);
+		System.out.println("Dodano nowego klienta: " + i);
 	}
 
 	@Override
@@ -26,21 +26,18 @@ public class Server implements Runnable
             BufferedReader in = new BufferedReader( new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             
-            //while(true)
-           // {
-            	// Czekaj na dane i zaczytuj wszystkie linie
-            	out.println("Witaj na serwerze\n");
-            	String userInput;
-            	while ((userInput = in.readLine()) != null) 
-            	{
-            	    out.println(userInput);
-            	    System.out.println("Watek: " + threadNum + " - powiedzial: " + userInput);
-            	}
-           // }
+        	out.println("Witaj na serwerze, uzytkowniku: " + threadNum + "\n");
+        	String userInput;
+        	
+        	while ((userInput = in.readLine()) != null) 
+        	{
+        	    out.println(userInput);
+        	    System.out.println("Klient: " + threadNum + " - powiedzial: " + userInput);
+        	}
         } 
 		catch (IOException e) 
 		{
-           System.out.println("Watek: " + threadNum + " wyrzucil blad: " + e);
+           System.out.println("Klient: " + threadNum + " wyrzucil blad: " + e);
         } 
 		finally
 		{
@@ -50,7 +47,7 @@ public class Server implements Runnable
 			}
 			catch (IOException e) 
 			{
-				 System.out.println("Watek: " + threadNum + " nie chce sie zamknac");
+				 System.out.println("Klient: " + threadNum + " nie chce sie zamknac");
 			}
 		}
 	}
