@@ -42,28 +42,36 @@ public class Client
 			System.out.println(in.readLine());
 			System.out.print("Klient: ");
 		
+			// Pobieramy wiadomosc od usera
 			while ((userInput = stdIn.readLine()) != null) 
 			{
+				// Wysylamy na serwer
 				out.println(userInput);
+				out.flush();
+				
+				// Wyswietlamy odpowiedz servera
 				System.out.println("Server: " + in.readLine());
+				
 				System.out.print("Klient: ");
 			}
-		} 
-		catch (IOException e) 
-		{
-			System.out.println("Klient, ma problem przy pobieraniu/wysylaniu danych");
-		}	
-	
-		try 
-		{
+			
 			out.close();
 			in.close();
 			stdIn.close();
-			socket.close();
 		} 
 		catch (IOException e) 
 		{
-			System.out.println("Klient, maproblem przy zamykaniu bufferow");
+			System.out.println("Klient, ma problem przy pobieraniu/wysylaniu danych" + e);
+			
+			try 
+			{
+				System.out.println("Klient, zamykanie socketu");
+				socket.close();
+			} 
+			catch (IOException e1) 
+			{
+				System.out.println("Klient, maproblem przy zamykaniu socketu" + e1);
+			}	
 		}	
 	}
 }

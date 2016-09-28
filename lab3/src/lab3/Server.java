@@ -23,23 +23,30 @@ public class Server implements Runnable
 	{	
 		try 
 		{
+			// Bufery do odbierania i wysylania wiadomosci
             BufferedReader in = new BufferedReader( new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             
         	out.println("Witaj na serwerze, uzytkowniku: " + threadNum + "\n");
-        	String userInput;
+        	String userInput = "";
         	
+        	// Wyswietlanie wiadomosci od klientow na serwerze
         	while ((userInput = in.readLine()) != null) 
         	{
-        	    out.println(userInput);
         	    System.out.println("Klient: " + threadNum + " - powiedzial: " + userInput);
+        	    out.println(userInput);
+        	    out.flush();
         	}
+        	
+        	// Zamkniecie bufferow
+        	in.close();
+        	out.close();
         } 
 		catch (IOException e) 
 		{
            System.out.println("Klient: " + threadNum + " wyrzucil blad: " + e);
         } 
-		finally
+		finally // W razie problemu, zamknij socket
 		{
 			try
 			{

@@ -28,12 +28,14 @@ public class Lab3
 		{
 			while(true)
 			{
+				// Utworz nowy watek, dla kazdego kolejnego klienta
 				Thread serverThread = new Thread(new Server(serverSocket.accept(), threadNum++));
 				serverThread.start();
 			}
 		}
 		finally
 		{
+			// W razie problemu zamknij socket
 			serverSocket.close();
 		}
 	}
