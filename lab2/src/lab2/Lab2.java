@@ -51,7 +51,6 @@ public class Lab2
 				// Pobieranie parametrów po³¹czenia
 				String host = siteUrl.getHost();
 				InetAddress address = InetAddress.getByName(host);
-				Map<String, List<String>> map = siteUrlConnection.getHeaderFields();
 				Map<String, String> connParameters = new HashMap<String,String>();
 								
 				connParameters.put("URL - ",siteUrl.toString());
@@ -71,11 +70,10 @@ public class Lab2
 				while ((contentLine = br.readLine()) != null) 
 			    {
 					 contentPage.append(contentLine);
-					 //contentPage.append(System.lineSeparator());
 			    }
 				br.close();
 			
-				WriteFile(contentPage);
+				WriteFile(contentPage,connParameters);
 				ReadContent(br);
 				
 				
@@ -99,7 +97,7 @@ public class Lab2
 		}
 	}
 	
-	public static void WriteFile(StringBuilder contentPage)
+	public static void WriteFile(StringBuilder contentPage, Map<String, String> connParameters)
 	{
 		try 
 		{
@@ -133,10 +131,14 @@ public class Lab2
 			BufferedWriter bw = new BufferedWriter(fw);
 			
 			// Zapisanie paramatrow po³¹czenia do pliku
-			
-			
+			bw.write("PARAMETRY STRONY: \n");
+			for(Map.Entry<String, String> entry : connParameters.entrySet())
+			{
+				bw.write(entry.getKey() + entry.getValue() + "\n");
+			}
 			
 			// Zapisanie nag³ówka do pliku
+			bw.write("\nNAG£ÓWEK STRONY: \n");
 			for(String line : headerSplitted)
 			{
 				bw.write(line+"\n");
