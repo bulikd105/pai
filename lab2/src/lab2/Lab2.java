@@ -11,6 +11,7 @@ import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +64,6 @@ public class Lab2
 				connParameters.put("IP address - ",  address.getHostAddress());
 				connParameters.put("Address - ", address.getHostName());
 				
-
 				// Zczytanie calej zawartosci strony
 				BufferedReader br = new BufferedReader(new InputStreamReader(siteUrlConnection.getInputStream()));
 				
@@ -72,9 +72,10 @@ public class Lab2
 					 contentPage.append(contentLine);
 			    }
 				br.close();
-			
+				
+				//Uruchomienie metod do czytania zawartosci strony
+				ReadContent(contentPage);
 				WriteFile(contentPage,connParameters);
-				ReadContent(br);
 				
 				
 			} 
@@ -154,8 +155,47 @@ public class Lab2
 		}
 	}
 	
-	public static void ReadContent(BufferedReader br)
+	public static void ReadContent(StringBuilder contentPage)
 	{
+		ArrayList<String> links = new ArrayList<String>();
+		String linkPattern =  "(?i)<a href=\"(.*?)\">.*?</a>";
+		
+		ArrayList<String> emails = new ArrayList<String>();
+		String emailPattern =  "[A-Z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+		
+		Matcher regexMatcher; 
+		int i = 1;
+		
+		regexMatcher = Pattern.compile(linkPattern).matcher(contentPage);
+		
+		// Wyszukiwanie wzorca i zapisanie do go zmiennej
+		while(regexMatcher.find())
+		{
+		    if(regexMatcher.group().length() != 0) 
+		    {
+		            links.add(regexMatcher.group(1).trim());
+		    }
+		}
+		
+		System.out.println("LINKI NA STRONIE:\n");
+		for(String link : links)
+		{
+			System.out.println(i + " - " + link);
+			i++;
+		}
+
+		
+/*		regexMatcher = Pattern.compile(emailPattern).matcher(contentPage);
+		
+		// Wyszukiwanie wzorca i zapisanie do go zmiennej
+		if(regexMatcher.find()) 
+		{
+			if(regexMatcher.group().length() != 0) 
+			{
+				email = regexMatcher.group(1).trim();
+			}              
+		}
+		System.out.println(email);*/
 		
 	}
 }

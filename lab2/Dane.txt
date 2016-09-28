@@ -8,6 +8,7 @@ Protocol - https
 Ref - null
 IP address - 130.89.148.14
 Host - www.debian.org
+
 NAG£ÓWEK STRONY: 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Debian -- The Universal Operating System </title>
