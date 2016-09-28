@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 public class Client
 {
@@ -53,7 +52,7 @@ public class Client
 				
 				if(serverAnswer.equals("disconnect"))
 				{
-					System.out.println("Klient, zamykanie polaczenia");
+					System.out.println("Klient: zamykanie polaczenia");
 					socket.close();
 					break;
 				}

@@ -57,6 +57,7 @@ public class Server implements Runnable
 		{
 			try
 			{
+				System.out.println("Odlaczanie klienta nr: " + threadNum);
 				socket.close();
 			}
 			catch (IOException e) 
