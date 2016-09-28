@@ -21,36 +21,45 @@ public class Client
 		
 		String userInput;
 		
+		// Polaczenie sie do serwera
 		try
 		{
-			socket = new Socket(serverName, port);
-			out = new PrintWriter(socket.getOutputStream(), true);
-			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));	
+			socket = new Socket(serverName, port);	
 		}
-		catch (UnknownHostException e)
-		{
-			System.out.println("Nie rozpoznaje tego adresu: " + serverName);
-		} 
 		catch (IOException e) 
 		{
-			System.out.println("Blad przy pobieraniu danych dla tego adresu: " + serverName);
+			System.out.println("Blad przy laczeniu sie do tego adresu: " + serverName);
 		}
 		
 		try 
-		{
+		{	
+			out = new PrintWriter(socket.getOutputStream(), true);
+			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			stdIn = new BufferedReader(new InputStreamReader(System.in));
 			System.out.println(in.readLine());
 			System.out.print("Klient: ");
-		
+			
+			String serverAnswer;
 			// Pobieramy wiadomosc od usera
 			while ((userInput = stdIn.readLine()) != null) 
 			{
+				in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				
 				// Wysylamy na serwer
 				out.println(userInput);
 				out.flush();
 				
+				serverAnswer = in.readLine();
+				
+				if(serverAnswer.equals("disconnect"))
+				{
+					System.out.println("Klient, zamykanie polaczenia");
+					socket.close();
+					break;
+				}
+
 				// Wyswietlamy odpowiedz servera
-				System.out.println("Server: " + in.readLine());
+				System.out.println("Server: " + serverAnswer);
 				
 				System.out.print("Klient: ");
 			}

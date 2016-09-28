@@ -33,6 +33,13 @@ public class Server implements Runnable
         	// Wyswietlanie wiadomosci od klientow na serwerze
         	while ((userInput = in.readLine()) != null) 
         	{
+        		if(userInput.equals("exit"))
+        		{
+        			System.out.println("Odlaczanie klienta nr: " + threadNum);
+        			out.println("disconnect");
+        			socket.close();
+        			break;
+        		}
         	    System.out.println("Klient: " + threadNum + " - powiedzial: " + userInput);
         	    out.println(userInput);
         	    out.flush();
