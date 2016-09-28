@@ -14,6 +14,8 @@ import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /* 
  * @Autor 
@@ -43,6 +45,9 @@ public class Lab2
 				siteUrlConnection.setConnectTimeout(50);
 				siteUrlConnection.connect();
 				
+				StringBuilder contentPage = new StringBuilder();
+				String contentLine = "";
+				
 				// Pobieranie parametrów po³¹czenia
 				String host = siteUrl.getHost();
 				InetAddress address = InetAddress.getByName(host);
@@ -63,7 +68,13 @@ public class Lab2
 				// Zczytanie calej zawartosci strony
 				BufferedReader br = new BufferedReader(new InputStreamReader(siteUrlConnection.getInputStream()));
 				
-				WriteFile(br);
+				while ((contentLine = br.readLine()) != null) 
+			    {
+					 contentPage.append(contentLine);
+			    }
+				br.close();
+			
+				WriteFile(contentPage);
 				ReadContent(br);
 				
 				
@@ -87,7 +98,7 @@ public class Lab2
 		}
 	}
 	
-	public static void WriteFile(BufferedReader br)
+	public static void WriteFile(StringBuilder contentPage)
 	{
 
 		try 
@@ -101,6 +112,7 @@ public class Lab2
 			
 			FileWriter fw = new FileWriter(file.getAbsoluteFile());
 			BufferedWriter bw = new BufferedWriter(fw);
+			String contentLine = "";
 			
 			// Zapisanie parametrow polaczenia
 			bw.write("Parametry po³¹czenia:\n");
@@ -126,7 +138,7 @@ public class Lab2
 			}*/
 			
 			// Zapisanie naglowka strony
-			boolean flag = false;
+/*			boolean flag = false;
 		    String inputLine;
 		    
 		    bw.write("Naglowek strony: \n");
@@ -151,10 +163,25 @@ public class Lab2
 		    		flag = false;
 		    		break;
 		    	}
-		    }
-		    
+		    }*/
+			
+			
+			String header = "";
+			String headerPattern = "<head>(.*?)</head>";
+			
+			Matcher regexMatcher = Pattern.compile(headerPattern).matcher(contentPage);
+			
+			if(regexMatcher.find()) 
+			{
+				if(regexMatcher.group().length() != 0) 
+				{
+					header = regexMatcher.group(1).trim();
+				}              
+			}
+			
+			bw.write(header);
+    
 		    bw.close();
-			br.close();
 
 			System.out.println("Plik zapisany poprawnie");
 			
