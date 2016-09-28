@@ -7,9 +7,9 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class Client 
+public class Client
 {
-	public static void main(String[] args)
+	public static void main(String[] args) 
 	{
 		String serverName = "127.0.0.1";
 		int port = 6080;
@@ -25,22 +25,7 @@ public class Client
 		{
 			socket = new Socket(serverName, port);
 			out = new PrintWriter(socket.getOutputStream(), true);
-			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			
-			while(true)
-			{
-				
-				stdIn = new BufferedReader(new InputStreamReader(System.in));
-				System.out.println("Welcome: " + in.readLine());
-				System.out.print("input: ");
-				
-				while ((userInput = stdIn.readLine()) != null) 
-				{
-					out.println(userInput);
-					System.out.println("echo: " + in.readLine());
-					System.out.print("input: ");
-				}
-			}	
+			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));	
 		}
 		catch (UnknownHostException e)
 		{
@@ -58,6 +43,25 @@ public class Client
 			System.exit(1);
 		}
 		
+
+		try 
+		{
+			stdIn = new BufferedReader(new InputStreamReader(System.in));
+			System.out.println("Welcome: " + in.readLine());
+			System.out.print("input: ");
+		
+			while ((userInput = stdIn.readLine()) != null) 
+			{
+				out.println(userInput);
+				System.out.println("echo: " + in.readLine());
+				System.out.print("input: ");
+			}
+		} 
+		catch (IOException e) 
+		{
+			System.out.println("Klient, problem przy zamykaniu bufferow");
+		}	
+	
 		try 
 		{
 			out.close();
