@@ -31,10 +31,19 @@ public class Simulation
 				default 			: 	System.out.println("Zly argument, podaj jeden z tych:\n1 - starvation\n2 - livelock\n3 - deadlock\n");
 			}
 		}
+		else
+		{
+			System.out.println("Podales niepoprawna liczbe argumentow\n");
+		}
 	}
 
 	private static void deadlock() 
 	{
+		String dLock1 = "Deadlock 1";
+		String dLock2 = "Deadlock 2";
+		
+		Thread t1 = new Thread(new Deadlock(dLock1, dLock2), "t1");
+        Thread t2 = new Thread(new Deadlock(dLock2, dLock1), "t2");
 		
 	}
 
