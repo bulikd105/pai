@@ -17,16 +17,19 @@ public class Simulation
 	{
 		if(args.length == 1)
 		{
+			long start = 0;
+			long end = 0;
+			
 			switch(args[0])
 			{
 				case "starvation" 	: 	System.out.println("Wybrales opcje STARVATION");
-										starvation();
+										starvation(start,end);
 										break;
 				case "livelock" 	: 	System.out.println("Wybrales opcje LIVELOCK");
-										livelock();
+										livelock(start,end);
 										break;
 				case "deadlock" 	:	System.out.println("Wybrales opcje DEADLOCK");
-										deadlock();
+										deadlock(start,end);
 										break;
 				default 			: 	System.out.println("Zly argument, podaj jeden z tych:\n1 - starvation\n2 - livelock\n3 - deadlock\n");
 			}
@@ -37,7 +40,7 @@ public class Simulation
 		}
 	}
 
-	private static void deadlock() 
+	private static void deadlock(long start, long end) 
 	{
 		String dLock1 = "Deadlock 1";
 		String dLock2 = "Deadlock 2";
@@ -45,17 +48,22 @@ public class Simulation
 		Thread t1 = new Thread(new Deadlock(dLock1, dLock2), "t1");
         Thread t2 = new Thread(new Deadlock(dLock2, dLock1), "t2");
         
+        start = System.currentTimeMillis();
+        end = start + 10*1000;
+
         t1.start();
         t2.start();
-		
+
+             
+        System.out.println("Zakoñczenie symulacji DEADLOCK");
 	}
 
-	private static void livelock() 
+	private static void livelock(long start, long end) 
 	{
 		
 	}
 
-	private static void starvation() 
+	private static void starvation(long start, long end) 
 	{
 		
 	}
