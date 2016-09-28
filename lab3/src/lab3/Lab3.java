@@ -1,6 +1,5 @@
 package lab3;
 
-import java.io.IOException;
 import java.net.ServerSocket;
 
 /* 
@@ -29,14 +28,13 @@ public class Lab3
 		{
 			while(true)
 			{
-				Server server = new Server(serverSocket.accept(), threadNum++);
+				Thread serverThread = new Thread(new Server(serverSocket.accept(), threadNum++));
+				serverThread.start();
 			}
 		}
 		finally
 		{
 			serverSocket.close();
 		}
-
-
 	}
 }
