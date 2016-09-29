@@ -1,11 +1,15 @@
 package lab4;
 
 import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.nio.CharBuffer;
 import java.util.stream.Stream;
+
+import com.sun.org.apache.xml.internal.resolver.helpers.Debug;
 
 public class Client 
 {
@@ -35,52 +39,29 @@ public class Client
 		
 		// Dzialania na serwerze
 		try 
-		{	
+		{		
 			// Zmienne do przechwytywania odpowiedzi
 			String userInput;
 			String serverAnswer = "";
-			String line;
-			
-			boolean flag = true;
 			
 			// Inicjalizacja bufferow
 			out = new PrintWriter(socket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			stdIn = new BufferedReader(new InputStreamReader(System.in));
-/*			
-			System.out.print("Klient: ");
-			System.out.println(in.readLine());*/
 			
 			// Pobieramy wiadomosc od usera
 			while ((userInput = stdIn.readLine()) != null) 
 			{
-				in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				
 				// Wysylamy na serwer
 				out.println(userInput);
 				out.flush();
 				
-				while(flag)
+				while((serverAnswer = in.readLine()) != null)
 				{
-					line = in.readLine();
-					serverAnswer += line; 
-					if(line.equals(null))
-					{
-						flag = false;
-					}
+					System.out.println("Server: " + serverAnswer);
 				}
-							
-				//serverAnswer = in.lines();
-/*				if(serverAnswer.equals("disconnect"))
-				{
-					System.out.println("Klient: zamykanie polaczenia");
-					socket.close();
-					break;
-				}*/
-
-				// Wyswietlamy odpowiedz servera
-				System.out.println("Server: " + serverAnswer);
-				System.out.print("Klient: ");
+				
 			}
 			
 			// Zamykanie bufferow

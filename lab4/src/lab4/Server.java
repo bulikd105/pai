@@ -39,7 +39,7 @@ public class Server implements Runnable
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             String userInput = "";
             
-            System.out.println("Witamy w naszym banku\n");
+            out.println("Witamy w naszym banku\n");
             
             // Uruchomienie glownej petli
             while((userInput = in.readLine()) != null)
@@ -47,11 +47,12 @@ public class Server implements Runnable
             	out.println("Wybierz operacje ktora chcesz wykonac:");
             	out.println("1 - Wyswietl liste dostepnych uslug\n2 - Wyswietl liste swoich uslug\n" + 
             					   "3 - Dodaj nowa usluge\n4 - Wycofaj swoja usluge\n5 - Zarezerwuj usluge\n6 - Wyjdz");
+        		System.out.println("Klient: " + this.clientNumber + " wybral opcje " + userInput);
             	switch(userInput)
             	{
     				case "1" : 	DisplayList(serviceList,out);
     							break;
-    				case "2" : 	DisplayYourList(serviceList, out, this.clientNumber);
+    				case "2" : 	DisplayYourList(serviceList, out);
     							break;
     				case "3" : 	ServiceAdd(serviceList);
     							break;
@@ -61,7 +62,7 @@ public class Server implements Runnable
     							break;
     				case "6" : 	Logout();
     							break;
-    				default  : 	System.out.println("Nie ma takiej opcji\n");	
+    				default  : 	out.println("Nie ma takiej opcji\n");	
     						   	break;
             	}
             }
@@ -121,7 +122,7 @@ public class Server implements Runnable
 	}
 
 	// Wyswietl liste uslug danego uzytkownika
-	private void DisplayYourList(ArrayList<MyService> serviceList, PrintWriter out, int clientNumber) 
+	private void DisplayYourList(ArrayList<MyService> serviceList, PrintWriter out) 
 	{
 		// Tworzymy temp liste dla uslug klienta
 		ArrayList<MyService> clientList = new ArrayList<MyService>();
@@ -133,7 +134,7 @@ public class Server implements Runnable
 			// Przeszukujemy liste wszystkich uslug w poszukiwaniu uslug konkretnego klienta
 			for(MyService service : serviceList)
 			{
-				if(service.getOrderOwner() == clientNumber)
+				if(service.getOrderOwner() == this.clientNumber)
 				{
 					clientList.add(service);
 				}
