@@ -24,10 +24,10 @@ public class Simulation
 			{
 				case "starvation" 	: 	System.out.println("Wybrales opcje STARVATION");
 										starvation(start,end);
+										System.out.println("\nZakoñczenie symulacji STARVATION");
 										break;
 				case "livelock" 	: 	System.out.println("Wybrales opcje LIVELOCK");
 										livelock(start,end);
-										System.out.println("\nZakoñczenie symulacji STARVATION");
 										break;
 				case "deadlock" 	:	System.out.println("Wybrales opcje DEADLOCK");
 										deadlock(start,end);
@@ -142,26 +142,27 @@ public class Simulation
 		t2.setPriority(Thread.NORM_PRIORITY);
 		t3.setPriority(Thread.MIN_PRIORITY);
 		
-		// Uruchomienie watkow
-		t1.start();
-		t2.start();
-		t3.start();
-		
-		// Ustawienie czasu dzialania watkow
-		try
-		{
-			Thread.sleep(3000);
-		}
-		catch (InterruptedException e) 
-		{
-			e.printStackTrace();
-		}
-		
+        // Ustawienie czasu trwania blokowania watkow
+        start = System.currentTimeMillis();
+        end = start + 20*1000; // czas trwania: 30 sekund
+        boolean flag = true;
+        		
+        // Uruchomienie watkow
+        while(System.currentTimeMillis() < end)
+        {
+        	if(flag == true)
+        	{
+        		t1.start();
+        		t2.start();
+        		t3.start();
+        		
+                flag = false;
+        	}
+        }
+        
 		// Wylaczenie watkow
 		starver1.setActive(false);
 		starver2.setActive(false);
 		starver3.setActive(false);
-		
-
 	}
 }
