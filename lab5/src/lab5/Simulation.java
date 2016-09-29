@@ -82,9 +82,28 @@ public class Simulation
 		Starvation starver3 = new Starvation("Startvation 3");
 
 		// Przygotowanie watkow
-		Thread t1 = new Thread("Duzy priorytet");
-		Thread t2 = new Thread("Normalny priorytet");
-		Thread t3 = new Thread("Maly priorytet");
+		Thread t1 = new Thread("Duzy priorytet")
+		{
+			public void run()
+			{
+				starver1.Counter();
+			}
+		};
+		Thread t2 = new Thread("Normalny priorytet")
+		{
+			public void run()
+			{
+				starver2.Counter();
+			}
+		};
+		
+		Thread t3 = new Thread("Maly priorytet")
+		{
+			public void run()
+			{
+				starver3.Counter();
+			}
+		};
 		
 		// Ustawienie priorytetow dla watkow
 		t1.setPriority(Thread.MAX_PRIORITY);
