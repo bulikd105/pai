@@ -14,12 +14,20 @@ public class Livelock
 	{
 		while(!lock.word.equals("Witaj"))
 		{
-			
-		}
+			try
+			{
+				System.out.println("Watek: " + this.gender + "przechodzi w stan uspienia, poniewaz " + lock.gender + "nic powiedzial 'Witaj'");
+				Thread.sleep(10000);
+			}
+			catch(InterruptedException e)
+			{
+				e.printStackTrace();
+			}
+		}	
 		this.word = "Witaj";
 	}
 	
-	public class Thread implements Runnable
+	public class MyThread implements Runnable
 	{
 		// Obiekty ktore klasy nadrzednej
 		Livelock lock1;
