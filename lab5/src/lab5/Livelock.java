@@ -12,6 +12,7 @@ public class Livelock
 	
 	public void Hello(Livelock lock)
 	{
+		// Sprawdzaj czy drugi obiekt powiedzial "Witaj", jesli tak, odpowiedz mu
 		while(!lock.word.equals("Witaj"))
 		{
 			try
@@ -27,7 +28,7 @@ public class Livelock
 		this.word = "Witaj";
 	}
 	
-	public class MyThread implements Runnable
+	public static class MyThread implements Runnable
 	{
 		// Obiekty ktore klasy nadrzednej
 		Livelock lock1;

@@ -73,11 +73,19 @@ public class Simulation
 	private static void livelock(long start, long end) 
 	{
 		
-		Livelock lock1 = new Livelock("boy", "girl");
-		Livelock lock2 = new Livelock("girl", "boy");
+		Livelock lock1 = new Livelock("locker1");
+		Livelock lock2 = new Livelock("locker2");
 		
-		new Thread(lock1).start();
-		new Thread(lock2).start();
+		Livelock.MyThread thread1 = new Livelock.MyThread();
+		Livelock.MyThread thread2 = new Livelock.MyThread();
+		
+		thread1.setLocker1(lock1);
+		thread1.setLocker1(lock2);
+		thread2.setLocker1(lock1);
+		thread2.setLocker1(lock2);
+		
+		new Thread(thread1).start();
+		new Thread(thread2).start();
 		
 	}
 
