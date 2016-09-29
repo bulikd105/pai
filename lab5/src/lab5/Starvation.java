@@ -18,11 +18,13 @@ public class Starvation
 		this.isActive = isActive;
 	}
 
-	public void Distance()
+	public void Counter()
 	{
 		while(isActive)
 		{
-			
+			count += 1;
+			System.out.println(Thread.currentThread().getName() + " numer: " + count);
 		}
+		System.out.println("Czas minal. Aktualny numer: " + count + " dla tego watku" + name + " oraz " + Thread.currentThread().getName());
 	}
 }
