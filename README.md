@@ -54,3 +54,17 @@ Uwagi:
 Brak
 
 Lab 4:
+
+Uwagi:
+
+Lab 5:
+Program ma za zadanie zasymulować przypadki zakleszczania i blokowania się wątków na przykładach: Deadlock, Livelock, oraz Starvation.
+Do programu wprowadzam jako argument nazwe jednej z trzech symulacji:
+-deadlock
+-livelock
+-starvation
+
+Metoda Main, głównej klasy, uruchomi wtedy odpowiednią metodę i rozpocznie się symulacja.
+Metoda Deadlock, tworzy dwa obiekty, a następnie wątki dla każdego z nich. Wątki te jednocześnie próbują dostać się do tych samych zasobów, co powoduje zakleszczenie się ich. Żaden z wątków nie może otrzymać dostępu do zasobów, ktore są blokowane przez inny wątek. Proces ten może trwać w nieskończoność. Wyłącznik czasowy ustawiony jest na 30 sekund.
+Metoda Livelock,
+Metoda Starvation,
