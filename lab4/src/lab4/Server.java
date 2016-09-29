@@ -9,10 +9,18 @@ import java.util.ArrayList;
 
 public class Server implements Runnable 
 {
+	// Deklaracja stalych wartosci
+	private final static String SERVICE_NEW 		= "nowa";
+	private final static String SERVICE_RESERVED 	= "zarezerwowana";
+	private final static String SERVICE_UNUSED 		= "nieuzywana";
+	private final static String SERVICE_WITHDRAWN 	= "wycofana";
+	
+	// Glowne pola serwera dla danego klienta
 	private Socket socket;
 	private int clientNumber;
 	private ArrayList<MyService> services;
 	
+	// Konstruktor
 	public Server(Socket socket, int clientNumber, ArrayList<MyService> services) 
 	{
 		this.socket = socket;
@@ -41,15 +49,15 @@ public class Server implements Runnable
             					   "3 - Dodaj nowa usluge\n4 - Wycofaj swoja usluge\n5 - Zarezerwuj usluge\n6 - Wyjdz");
             	switch(userInput)
             	{
-    				case "1" : 	DisplayList();
+    				case "1" : 	DisplayList(services);
     							break;
-    				case "2" : 	DisplayYourList();
+    				case "2" : 	DisplayYourList(services);
     							break;
-    				case "3" : 	ServiceAdd();
+    				case "3" : 	ServiceAdd(services);
     							break;
-    				case "4" : 	ServiceRemove();
+    				case "4" : 	ServiceRemove(services);
     							break;
-    				case "5" : 	ServiceReserve();
+    				case "5" : 	ServiceReserve(services);
     							break;
     				case "6" : 	Logout();
     							break;
@@ -68,49 +76,53 @@ public class Server implements Runnable
 		}
 		finally // W razie gdyby klient zglosil blad, rozlacz go
 		{
-			try
-			{
-				System.out.println("Odlaczanie klienta nr: " + clientNumber);
-				socket.close();
-			}
-			catch (IOException e) 
-			{
-				 System.out.println("Odlaczanie klienta nr: " + clientNumber + " nie powiodlo sie");
-			}
+			Logout();
 		}
 	}
 
 	private void Logout() 
 	{
-		// TODO Auto-generated method stub
-		
+		try
+		{
+			System.out.println("Odlaczanie klienta nr: " + clientNumber);
+			socket.close();
+		}
+		catch (IOException e) 
+		{
+			 System.out.println("Odlaczanie klienta nr: " + clientNumber + " nie powiodlo sie");
+		}
 	}
 
+	// Zarezerwuj usluge
 	private void ServiceReserve() 
 	{
 		// TODO Auto-generated method stub
 		
 	}
 
+	// Usun usluge
 	private void ServiceRemove() 
 	{
 		// TODO Auto-generated method stub
 		
 	}
 
+	// Dodaj usluge
 	private void ServiceAdd() 
 	{
 		// TODO Auto-generated method stub
 		
 	}
 
-	private void DisplayYourList() 
+	// Wyswietl liste uslug danego uzytkownika
+	private void DisplayYourList(ArrayList<MyService> services) 
 	{
 		// TODO Auto-generated method stub
 		
 	}
-
-	private void DisplayList() 
+	
+	// Wyswietl liste wszystkich uslug
+	private void DisplayList(ArrayList<MyService> services) 
 	{
 		// TODO Auto-generated method stub
 		
