@@ -72,8 +72,12 @@ public class Simulation
 
 	private static void livelock(long start, long end) 
 	{
-		Livelock boy = new Livelock("chlopak");
-		Livelock girl = new Livelock("dziewczyna");
+		
+		Livelock lock1 = new Livelock("boy", "girl");
+		Livelock lock2 = new Livelock("girl", "boy");
+		
+		new Thread(lock1).start();
+		new Thread(lock2).start();
 		
 	}
 

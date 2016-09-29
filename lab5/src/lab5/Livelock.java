@@ -2,16 +2,16 @@ package lab5;
 
 public class Livelock implements Runnable
 {
-	String gender;
-	Livelock lock1;
-	Livelock lock2;
+	String person1;
+	String person2;
 	
-	public Livelock(String gender)
+	public Livelock(String person1, String person2)
 	{
-		this.gender = gender;
+		this.person1 = person1;
+		this.person2 = person2;
 	}
 	
-	public void Hello(Livelock lock)
+	public void Hello(String person)
 	{
 		
 	}
