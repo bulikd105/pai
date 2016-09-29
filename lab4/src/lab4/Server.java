@@ -13,7 +13,6 @@ public class Server implements Runnable
 	private int clientNumber;
 	private ArrayList<MyService> services;
 	
-	
 	public Server(Socket socket, int clientNumber, ArrayList<MyService> services) 
 	{
 		this.socket = socket;
@@ -32,10 +31,31 @@ public class Server implements Runnable
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             String userInput = "";
             
+            System.out.println("Witamy w naszym banku\n");
+            
             // Uruchomienie glownej petli
             while((userInput = in.readLine()) != null)
             {
-            	
+            	System.out.println("Wybierz operacje ktora chcesz wykonac:");
+            	System.out.println("1 - Wyswietl liste dostepnych uslug\n2 - Wyswietl liste swoich uslug\n" + 
+            					   "3 - Dodaj nowa usluge\n4 - Wycofaj swoja usluge\n5 - Zarezerwuj usluge\n6 - Wyjdz");
+            	switch(userInput)
+            	{
+    				case "1" : 	DisplayList();
+    							break;
+    				case "2" : 	DisplayYourList();
+    							break;
+    				case "3" : 	ServiceAdd();
+    							break;
+    				case "4" : 	ServiceRemove();
+    							break;
+    				case "5" : 	ServiceReserve();
+    							break;
+    				case "6" : 	Logout();
+    							break;
+    				default  : 	System.out.println("Nie ma takiej opcji\n");	
+    						   	break;
+            	}
             }
             
         	// Zamkniecie bufferow
@@ -58,5 +78,41 @@ public class Server implements Runnable
 				 System.out.println("Odlaczanie klienta nr: " + clientNumber + " nie powiodlo sie");
 			}
 		}
+	}
+
+	private void Logout() 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void ServiceReserve() 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void ServiceRemove() 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void ServiceAdd() 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void DisplayYourList() 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void DisplayList() 
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }
