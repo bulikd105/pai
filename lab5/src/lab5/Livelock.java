@@ -18,10 +18,11 @@ public class Livelock
 	
 	public class Thread implements Runnable
 	{
-		
+		// Obiekty ktore klasy nadrzednej
 		Livelock lock1;
 		Livelock lock2;
 		
+		// Ustawianie wartosci dla obiektow
 		void setLocker1(Livelock lock)
 		{
 			this.lock1 = lock;
@@ -31,7 +32,8 @@ public class Livelock
 		{
 			this.lock2 = lock;
 		}
-
+		
+		// Wywowalnie metody dla obiektu 
 		@Override
 		public void run() 
 		{
