@@ -49,20 +49,36 @@ public class Client
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			stdIn = new BufferedReader(new InputStreamReader(System.in));
 			
-			// Pobieramy wiadomosc od usera
+			//out.print("Witaj serwerze\n");
+			
+/*			// Czytam to co odpowiedzial serwer
+			while((serverAnswer = in.readLine()) != null)
+			{
+				System.out.println("Server: " + serverAnswer);
+				
+				// Czytam to co wpisal user
+				while ((userInput = stdIn.readLine()) != null) 
+				{
+					// Odpowiadam serwerowi
+					out.println(userInput);
+					out.flush();
+				}	
+			}*/
+			
+			// Czytam to co wpisal user
 			while ((userInput = stdIn.readLine()) != null) 
 			{
-				
-				// Wysylamy na serwer
-				out.println(userInput);
-				out.flush();
-				
+				// Czytam to co odpowiedzial serwer
 				while((serverAnswer = in.readLine()) != null)
 				{
 					System.out.println("Server: " + serverAnswer);
 				}
+				// Odpowiadam serwerowi
+				out.println(userInput);
+				out.flush();
 				
 			}
+			
 			
 			// Zamykanie bufferow
 			out.close();
