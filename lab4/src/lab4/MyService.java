@@ -58,6 +58,4 @@ public class MyService
 	{
 		return orderStatus;
 	}
-	
-	
 }
