@@ -23,8 +23,8 @@ public class Starvation
 		while(isActive)
 		{
 			count += 1;
-			System.out.println(Thread.currentThread().getName() + " numer: " + count);
+			System.out.println(name + " numer: " + count);
 		}
-		System.out.println("Czas minal. Aktualny numer: " + count + " dla tego watku" + name + " oraz " + Thread.currentThread().getName());
+		System.out.println("STOP. Watek: " + name + " majacy "  + Thread.currentThread().getName() + " osiagnal wartosc: " + count);
 	}
 }

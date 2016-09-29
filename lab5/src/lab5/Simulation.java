@@ -27,6 +27,7 @@ public class Simulation
 										break;
 				case "livelock" 	: 	System.out.println("Wybrales opcje LIVELOCK");
 										livelock(start,end);
+										System.out.println("\nZakoñczenie symulacji STARVATION");
 										break;
 				case "deadlock" 	:	System.out.println("Wybrales opcje DEADLOCK");
 										deadlock(start,end);
@@ -129,5 +130,7 @@ public class Simulation
 		starver1.setActive(false);
 		starver2.setActive(false);
 		starver3.setActive(false);
+		
+
 	}
 }
