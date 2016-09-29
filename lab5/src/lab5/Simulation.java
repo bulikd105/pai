@@ -53,7 +53,7 @@ public class Simulation
         
         // Ustawienie czasu trwania blokowania watkow
         start = System.currentTimeMillis();
-        end = start + 30*1000; // czas trwania: 30 sekund
+        end = start + 20*1000; // czas trwania: 30 sekund
         boolean flag = true;
         
         // Uruchomienie deadlock'a
@@ -72,21 +72,38 @@ public class Simulation
 
 	private static void livelock(long start, long end) 
 	{
-		
+		// Deklaracja obiektow
 		Livelock lock1 = new Livelock("locker1");
 		Livelock lock2 = new Livelock("locker2");
 		
+		// Deklaracja watkow
 		Livelock.MyThread thread1 = new Livelock.MyThread();
 		Livelock.MyThread thread2 = new Livelock.MyThread();
 		
+		// Ustawienie wartosci w watkach
 		thread1.setLocker1(lock1);
 		thread1.setLocker2(lock2);
 		thread2.setLocker1(lock2);
 		thread2.setLocker2(lock1);
 		
-		new Thread(thread1).start();
-		new Thread(thread2).start();
-		
+        // Ustawienie czasu trwania blokowania watkow
+        start = System.currentTimeMillis();
+        end = start + 20*1000; // czas trwania: 30 sekund
+        boolean flag = true;
+        		
+        // Uruchomienie watkow
+        while(System.currentTimeMillis() < end)
+        {
+        	if(flag == true)
+        	{
+        		new Thread(thread1).start();
+        		new Thread(thread2).start();
+                flag = false;
+        	}
+        }
+        
+        System.out.println("Zakoñczenie symulacji LIVELOCK");
+        System.exit(1);
 	}
 
 	private static void starvation(long start, long end) 
