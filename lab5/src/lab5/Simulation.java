@@ -91,8 +91,24 @@ public class Simulation
 		t2.setPriority(Thread.NORM_PRIORITY);
 		t3.setPriority(Thread.MIN_PRIORITY);
 		
+		// Uruchomienie watkow
 		t1.start();
 		t2.start();
 		t3.start();
+		
+		// Ustawienie czasu dzialania watkow
+		try
+		{
+			Thread.sleep(3000);
+		}
+		catch (InterruptedException e) 
+		{
+			e.printStackTrace();
+		}
+		
+		// Wylaczenie watkow
+		starver1.setActive(false);
+		starver2.setActive(false);
+		starver3.setActive(false);
 	}
 }
