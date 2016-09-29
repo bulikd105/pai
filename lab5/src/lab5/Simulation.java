@@ -72,6 +72,8 @@ public class Simulation
 
 	private static void livelock(long start, long end) 
 	{
+		Livelock boy = new Livelock("chlopak");
+		Livelock girl = new Livelock("dziewczyna");
 		
 	}
 
