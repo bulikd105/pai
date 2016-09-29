@@ -4,10 +4,14 @@ import java.net.Socket;
 
 public class Server implements Runnable 
 {
-
-	public Server(Socket accept, int i) 
+	private Socket socket;
+	private int clientNumber;
+	
+	public Server(Socket socket, int clientNumber) 
 	{
-		// TODO Auto-generated constructor stub
+		this.socket = socket;
+		this.clientNumber = clientNumber;
+		System.out.println("Dodano nowego klienta: " + this.clientNumber);
 	}
 
 	@Override

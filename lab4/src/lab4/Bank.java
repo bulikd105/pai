@@ -3,8 +3,6 @@ package lab4;
 import java.io.IOException;
 import java.net.ServerSocket;
 
-import lab3.Server;
-
 /* 
  * @Autor 
  * Damian Dworak
