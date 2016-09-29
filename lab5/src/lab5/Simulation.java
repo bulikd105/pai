@@ -42,20 +42,32 @@ public class Simulation
 
 	private static void deadlock(long start, long end) 
 	{
+		// Dwa obiekty ktore beda korzystaly z tych samych zasobow
 		String dLock1 = "Deadlock 1";
 		String dLock2 = "Deadlock 2";
 		
+		// Dwa watki dla kazdego zasobu
 		Thread t1 = new Thread(new Deadlock(dLock1, dLock2), "t1");
         Thread t2 = new Thread(new Deadlock(dLock2, dLock1), "t2");
         
+        // Ustawienie czasu trwania blokowania watkow
         start = System.currentTimeMillis();
-        end = start + 10*1000;
-
-        t1.start();
-        t2.start();
-
-             
+        end = start + 30*1000; // czas trwania: 30 sekund
+        boolean flag = true;
+        
+        // Uruchomienie deadlock'a
+        while(System.currentTimeMillis() < end)
+        {
+        	if(flag == true)
+        	{
+        		t1.start();
+                t2.start();
+                flag = false;
+        	}
+        }
+        
         System.out.println("Zakoñczenie symulacji DEADLOCK");
+        System.exit(1);
 	}
 
 	private static void livelock(long start, long end) 
