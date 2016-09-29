@@ -28,5 +28,36 @@ public class MyService
 	{
 		this.orderStatus = orderStatus;
 	}
+
+	public int getOrderOwner() 
+	{
+		return orderOwner;
+	}
+
+	public int getOrderClient() 
+	{
+		return orderClient;
+	}
+
+	public int getOrderIndex() 
+	{
+		return orderIndex;
+	}
+
+	public int getOrderDate() 
+	{
+		return orderDate;
+	}
+
+	public String getOrderName() 
+	{
+		return orderName;
+	}
+
+	public String getOrderStatus() 
+	{
+		return orderStatus;
+	}
+	
 	
 }

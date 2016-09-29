@@ -18,14 +18,14 @@ public class Server implements Runnable
 	// Glowne pola serwera dla danego klienta
 	private Socket socket;
 	private int clientNumber;
-	private ArrayList<MyService> services;
+	private ArrayList<MyService> serviceList;
 	
 	// Konstruktor
-	public Server(Socket socket, int clientNumber, ArrayList<MyService> services) 
+	public Server(Socket socket, int clientNumber, ArrayList<MyService> serviceList) 
 	{
 		this.socket = socket;
 		this.clientNumber = clientNumber;
-		this.services = services;
+		this.serviceList = serviceList;
 		System.out.println("Dodano nowego klienta: " + this.clientNumber);
 	}
 
@@ -44,20 +44,20 @@ public class Server implements Runnable
             // Uruchomienie glownej petli
             while((userInput = in.readLine()) != null)
             {
-            	System.out.println("Wybierz operacje ktora chcesz wykonac:");
-            	System.out.println("1 - Wyswietl liste dostepnych uslug\n2 - Wyswietl liste swoich uslug\n" + 
+            	out.println("Wybierz operacje ktora chcesz wykonac:");
+            	out.println("1 - Wyswietl liste dostepnych uslug\n2 - Wyswietl liste swoich uslug\n" + 
             					   "3 - Dodaj nowa usluge\n4 - Wycofaj swoja usluge\n5 - Zarezerwuj usluge\n6 - Wyjdz");
             	switch(userInput)
             	{
-    				case "1" : 	DisplayList(services);
+    				case "1" : 	DisplayList(serviceList,out);
     							break;
-    				case "2" : 	DisplayYourList(services);
+    				case "2" : 	DisplayYourList(serviceList, out, this.clientNumber);
     							break;
-    				case "3" : 	ServiceAdd(services);
+    				case "3" : 	ServiceAdd(serviceList);
     							break;
-    				case "4" : 	ServiceRemove(services);
+    				case "4" : 	ServiceRemove(serviceList);
     							break;
-    				case "5" : 	ServiceReserve(services);
+    				case "5" : 	ServiceReserve(serviceList);
     							break;
     				case "6" : 	Logout();
     							break;
@@ -94,37 +94,95 @@ public class Server implements Runnable
 	}
 
 	// Zarezerwuj usluge
-	private void ServiceReserve() 
+	private MyService ServiceReserve(ArrayList<MyService> serviceList) 
 	{
-		// TODO Auto-generated method stub
+		MyService service = null;
+		
+		return service;
 		
 	}
 
 	// Usun usluge
-	private void ServiceRemove() 
+	private MyService ServiceRemove(ArrayList<MyService> serviceList) 
 	{
-		// TODO Auto-generated method stub
+		MyService service = null;
+		
+		return service;
 		
 	}
 
 	// Dodaj usluge
-	private void ServiceAdd() 
+	private MyService ServiceAdd(ArrayList<MyService> serviceList) 
 	{
-		// TODO Auto-generated method stub
+		MyService service = null;
+		
+		return service;
 		
 	}
 
 	// Wyswietl liste uslug danego uzytkownika
-	private void DisplayYourList(ArrayList<MyService> services) 
+	private void DisplayYourList(ArrayList<MyService> serviceList, PrintWriter out, int clientNumber) 
 	{
-		// TODO Auto-generated method stub
+		// Tworzymy temp liste dla uslug klienta
+		ArrayList<MyService> clientList = new ArrayList<MyService>();
 		
+		out.println("WYSWIETL LISTE WYSTAWIONYCH PRZEZ CIEBIE USLUG\n");
+		// Sprawdzamy czy lista uslug nie jest pusta
+		if(!serviceList.isEmpty())
+		{
+			// Przeszukujemy liste wszystkich uslug w poszukiwaniu uslug konkretnego klienta
+			for(MyService service : serviceList)
+			{
+				if(service.getOrderOwner() == clientNumber)
+				{
+					clientList.add(service);
+				}
+			}
+		}
+		else
+		{
+			out.println("Lista wszystkich uslug jest pusta\n");
+		}
+		
+		// Sprawdzamy czy list uslug tego klienta nie jest pusta
+		if(!serviceList.isEmpty())
+		{
+			// Wyswietl wszystkie uslugi tego klienta
+			for(MyService service : clientList)
+			{
+				out.println("Tworca: " + service.getOrderOwner());
+				out.println("Usluga nr: " + service.getOrderIndex());
+				out.println("Nazwa: " + service.getOrderName());
+				out.println("Termin wykonania: " + service.getOrderDate());
+				out.println("Status: " + service.getOrderStatus());
+			}
+		}
+		else
+		{
+			out.println("Lista Twoich uslug jest pusta\n");
+		}
 	}
 	
 	// Wyswietl liste wszystkich uslug
-	private void DisplayList(ArrayList<MyService> services) 
+	private void DisplayList(ArrayList<MyService> serviceList, PrintWriter out) 
 	{
-		// TODO Auto-generated method stub
-		
+		out.println("WYSWIETL LISTE WSZYSTKICH USLUG\n");
+		// Sprawdzamy czy lista wszystkich uslug nie jest pusta
+		if(!serviceList.isEmpty())
+		{
+			// Wyswietlamy liste wszystkich uslg
+			for(MyService service : serviceList)
+			{
+				out.println("Tworca: " + service.getOrderOwner());
+				out.println("Usluga nr: " + service.getOrderIndex());
+				out.println("Nazwa: " + service.getOrderName());
+				out.println("Termin wykonania: " + service.getOrderDate());
+				out.println("Status: " + service.getOrderStatus());
+			}
+		}
+		else
+		{
+			out.println("Lista wszystkich uslug jest pusta\n");
+		}
 	}
 }
