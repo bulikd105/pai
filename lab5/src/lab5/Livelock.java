@@ -2,18 +2,21 @@ package lab5;
 
 public class Livelock 
 {
-	String person1;
-	String person2;
+	private String gender;
+	private String word = "!";
 	
-	public Livelock(String person1, String person2)
+	public Livelock(String gender)
 	{
-		this.person1 = person1;
-		this.person2 = person2;
+		this.gender = gender;
 	}
 	
-	public void Hello(Livelock lock2)
+	public void Hello(Livelock lock)
 	{
-		
+		while(!lock.word.equals("Witaj"))
+		{
+			
+		}
+		this.word = "Witaj";
 	}
 	
 	public class Thread implements Runnable
@@ -39,6 +42,5 @@ public class Livelock
 		{
 			lock1.Hello(lock2);
 		}
-	}
-	
+	}	
 }
