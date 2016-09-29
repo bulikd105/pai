@@ -1,5 +1,4 @@
-# pai
-Zadania na przedmiot: Projektowanie Aplikacji Internetowych
+# Projektowanie Aplikacji Internetowych
 
 Autor:
 Damian Dworak
@@ -64,7 +63,7 @@ Do programu wprowadzam jako argument nazwe jednej z trzech symulacji:
 -livelock
 -starvation
 
-Metoda Main, głównej klasy, uruchomi wtedy odpowiednią metodę i rozpocznie się symulacja.
-Metoda Deadlock, tworzy dwa obiekty, a następnie wątki dla każdego z nich. Wątki te jednocześnie próbują dostać się do tych samych zasobów, co powoduje zakleszczenie się ich. Żaden z wątków nie może otrzymać dostępu do zasobów, ktore są blokowane przez inny wątek. Proces ten może trwać w nieskończoność. Wyłącznik czasowy ustawiony jest na 30 sekund.
-Metoda Livelock, tworzy obiekty, oraz watki dla nich. Ustawia obiekty w odpowiedniej kolejnosci w metodzie watku. Ustawia ograniczenia czasowe i uruchamia watki. Metoda Hello, klasy livelock, dla jednego obiektu oczekuje na wiadomosc od drugiego, gdy jej nie dostaje przechodzi w stan uspienia, aby po wybudzeniu sprawdzic ponowenie czy wiadomosc zostala otrzymana.
-Metoda Starvation, tworzy trzy obiekty, do każdego z nich tworzy watek z metoda liczaca. Ustawia im rózne priorytety, duzy, normalny i niski. Uruchamia te watki. Możemy zaobserwować, że wątek z najwyższym priorytetem działał dłużej i osiągnąl lepszy wynik. Wątek z najniższym niestety "głodował", i nie dostawał tak często dostępu do zasobów, przez co osiągnąl gorszy wynik.
+- Metoda Main, głównej klasy, uruchomi wtedy odpowiednią metodę i rozpocznie się symulacja.
+- Metoda Deadlock, tworzy dwa obiekty, a następnie wątki dla każdego z nich. Wątki te jednocześnie próbują dostać się do tych samych zasobów, co powoduje zakleszczenie się ich. Żaden z wątków nie może otrzymać dostępu do zasobów, ktore są blokowane przez inny wątek. Proces ten może trwać w nieskończoność. Wyłącznik czasowy ustawiony jest na 30 sekund.
+- Metoda Livelock, tworzy obiekty, oraz watki dla nich. Ustawia obiekty w odpowiedniej kolejnosci w metodzie watku. Ustawia ograniczenia czasowe i uruchamia watki. Metoda Hello, klasy livelock, dla jednego obiektu oczekuje na wiadomosc od drugiego, gdy jej nie dostaje przechodzi w stan uspienia, aby po wybudzeniu sprawdzic ponowenie czy wiadomosc zostala otrzymana.
+- Metoda Starvation, tworzy trzy obiekty, do każdego z nich tworzy watek z metoda liczaca. Ustawia im rózne priorytety, duzy, normalny i niski. Uruchamia te watki. Możemy zaobserwować, że wątek z najwyższym priorytetem działał dłużej i osiągnąl lepszy wynik. Wątek z najniższym niestety "głodował", i nie dostawał tak często dostępu do zasobów, przez co osiągnąl gorszy wynik.
