@@ -2,6 +2,7 @@ package lab4;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.util.ArrayList;
 
 /* 
  * @Autor 
@@ -18,11 +19,11 @@ import java.net.ServerSocket;
 
 public class Bank 
 {
+	public static ArrayList<MyService> services = new ArrayList<MyService>(); 
+	
 	public static void main(String[] args) throws IOException
 	{
 		int clientNumber = 1;
-		
-		private static ArrayList<MyService> services = new ArrayList<MyService>();  
 		
 		// Deklaracja serwera
 		int port = 6080;
@@ -35,7 +36,7 @@ public class Bank
 			while(true)
 			{
 				// Utworz nowy watek, dla kazdego kolejnego klienta
-				Thread clientThread = new Thread(new Server(bankServerSocket.accept(), clientNumber++));
+				Thread clientThread = new Thread(new Server(bankServerSocket.accept(), clientNumber++, services));
 				clientThread.start();
 			}
 		}

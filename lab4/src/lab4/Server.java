@@ -5,17 +5,20 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Server implements Runnable 
 {
 	private Socket socket;
 	private int clientNumber;
+	private ArrayList<MyService> services;
 	
 	
-	public Server(Socket socket, int clientNumber) 
+	public Server(Socket socket, int clientNumber, ArrayList<MyService> services) 
 	{
 		this.socket = socket;
 		this.clientNumber = clientNumber;
+		this.services = services;
 		System.out.println("Dodano nowego klienta: " + this.clientNumber);
 	}
 
