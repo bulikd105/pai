@@ -76,6 +76,23 @@ public class Simulation
 
 	private static void starvation(long start, long end) 
 	{
+		// Obiekty dla ktorych beda tworzone watki
+		Starvation starver1 = new Starvation("Startvation 1");
+		Starvation starver2 = new Starvation("Startvation 2");
+		Starvation starver3 = new Starvation("Startvation 3");
+
+		// Przygotowanie watkow
+		Thread t1 = new Thread("Duzy priorytet");
+		Thread t2 = new Thread("Normalny priorytet");
+		Thread t3 = new Thread("Maly priorytet");
 		
+		// Ustawienie priorytetow dla watkow
+		t1.setPriority(Thread.MAX_PRIORITY);
+		t2.setPriority(Thread.NORM_PRIORITY);
+		t3.setPriority(Thread.MIN_PRIORITY);
+		
+		t1.start();
+		t2.start();
+		t3.start();
 	}
 }
