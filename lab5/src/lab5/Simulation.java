@@ -65,7 +65,6 @@ public class Simulation
                 flag = false;
         	}
         }
-        
         System.out.println("Zakoñczenie symulacji DEADLOCK");
         System.exit(1);
 	}
