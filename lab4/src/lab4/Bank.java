@@ -1,5 +1,10 @@
 package lab4;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+
+import lab3.Server;
+
 /* 
  * @Autor 
  * Damian Dworak
@@ -15,8 +20,29 @@ package lab4;
 
 public class Bank 
 {
-	public static void main(String[] args)
+	public static void main(String[] args) throws IOException
 	{
+		int clientNumber = 1;
 		
+		// Deklaracja serwera
+		int port = 6080;
+		ServerSocket bankServerSocket = new ServerSocket(port);
+		System.out.println("Utworzono server na porcie: " + port);
+
+		// Uruchomienie serwera w nieskonczonej petli
+		try
+		{
+			while(true)
+			{
+				// Utworz nowy watek, dla kazdego kolejnego klienta
+				Thread clientThread = new Thread(new Server(bankServerSocket.accept(), clientNumber++));
+				clientThread.start();
+			}
+		}
+		// W razie problemu, zamknij serwer
+		finally
+		{
+			bankServerSocket.close();
+		}
 	}
 }
