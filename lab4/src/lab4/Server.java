@@ -11,6 +11,7 @@ public class Server implements Runnable
 	private Socket socket;
 	private int clientNumber;
 	
+	
 	public Server(Socket socket, int clientNumber) 
 	{
 		this.socket = socket;

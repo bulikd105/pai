@@ -22,6 +22,8 @@ public class Bank
 	{
 		int clientNumber = 1;
 		
+		private static ArrayList<MyService> services = new ArrayList<MyService>();  
+		
 		// Deklaracja serwera
 		int port = 6080;
 		ServerSocket bankServerSocket = new ServerSocket(port);
