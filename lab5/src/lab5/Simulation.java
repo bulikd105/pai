@@ -101,7 +101,6 @@ public class Simulation
                 flag = false;
         	}
         }
-        
         System.out.println("Zakoñczenie symulacji LIVELOCK");
         System.exit(1);
 	}
