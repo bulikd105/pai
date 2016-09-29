@@ -80,9 +80,9 @@ public class Simulation
 		Livelock.MyThread thread2 = new Livelock.MyThread();
 		
 		thread1.setLocker1(lock1);
-		thread1.setLocker1(lock2);
-		thread2.setLocker1(lock1);
+		thread1.setLocker2(lock2);
 		thread2.setLocker1(lock2);
+		thread2.setLocker2(lock1);
 		
 		new Thread(thread1).start();
 		new Thread(thread2).start();

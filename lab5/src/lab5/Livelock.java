@@ -17,8 +17,8 @@ public class Livelock
 		{
 			try
 			{
-				System.out.println("Watek: " + this.gender + "przechodzi w stan uspienia, poniewaz " + lock.gender + "nic powiedzial 'Witaj'");
-				Thread.sleep(10000);
+				System.out.println("Watek: " + this.gender + " przechodzi w stan uspienia, poniewaz " + lock.gender + " nie powiedzial 'Witaj'");
+				Thread.sleep(5000);
 			}
 			catch(InterruptedException e)
 			{
