@@ -25,6 +25,7 @@ public class Client
 		BufferedReader in = null;
 		BufferedReader stdIn = null;
 
+		DataInputStream dIS = null;
 		
 		// Polaczenie sie do serwera
 		try
@@ -41,19 +42,37 @@ public class Client
 		try 
 		{		
 			// Zmienne do przechwytywania odpowiedzi
-			String userInput;
+			String userInput = "";
 			String serverAnswer = "";
+			boolean flagGlobal = true;
+			boolean flagClient = false;
+			boolean flagServer = true;
+			
 			
 			// Inicjalizacja bufferow
 			out = new PrintWriter(socket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			stdIn = new BufferedReader(new InputStreamReader(System.in));
+			dIS = new DataInputStream(socket.getInputStream());
 			
-			//out.print("Witaj serwerze\n");
+/*			out.print("Witaj serwerze\n");
 			
-/*			// Czytam to co odpowiedzial serwer
+			// Czytam to co odpowiedzial serwer
 			while((serverAnswer = in.readLine()) != null)
 			{
+				// Zamykanie socketu
+				if(serverAnswer.equals("logout"))
+				{
+					System.out.println("Wylogowuje cie z serwera");
+				
+					out.close();
+					in.close();
+					stdIn.close();
+					socket.close();
+					System.exit(1);
+					//Logout(socket, out, in, stdIn);
+				}
+				
 				System.out.println("Server: " + serverAnswer);
 				
 				// Czytam to co wpisal user
@@ -63,12 +82,97 @@ public class Client
 					out.println(userInput);
 					out.flush();
 				}	
+			}
+			*/
+			
+/*			out.print("Witaj serwerze\n");
+			while(flag == true)
+			{
+				if((userInput = stdIn.readLine()) != null)
+				{
+					// Odpowiadam serwerowi
+					out.println(userInput);
+					out.flush();
+				}
+				
+				if((serverAnswer = in.readLine()) != null)
+				{
+					// Zamykanie socketu
+					if(serverAnswer.equals("logout"))
+					{
+						System.out.println("Wylogowuje cie z serwera");
+						flag = false;
+					}
+					System.out.println("Server: " + serverAnswer);
+				}
 			}*/
 			
+			//out.println("Witaj serwerze\n");
+			while(flagGlobal == true)
+			{
+
+				while(flagServer == true)
+				{
+					serverAnswer = in.readLine();
+					System.out.println("Server: " + serverAnswer);
+					// Zamykanie socketu
+					if(serverAnswer.equals("logout"))
+					{
+						flagGlobal = false;
+					}
+					
+					if(in.readLine() == null)
+					{
+						flagClient = true;
+						flagServer = false;
+					}
+				}
+				
+				while(flagClient == true) 
+				{
+					userInput = stdIn.readLine();
+					out.println(userInput);
+					out.flush();
+					
+					if(stdIn.readLine() == null)
+					{
+						flagClient = false;
+						flagServer = true;
+					}
+				}
+			}
+			
+			
+			
+			
+			
+			
+			/*// Czytam to co wpisal user
+			while ((userInput = stdIn.readLine()) != null && flag == true) 
+			{	
+				// Odpowiadam serwerowi
+				out.println(userInput);
+				out.flush();
+				// Czytam to co odpowiedzial serwer
+				while((serverAnswer = in.readLine()) != null && flag == true)
+				{
+					System.out.println("Server: " + serverAnswer);
+					// Zamykanie socketu
+					if(serverAnswer.equals("logout"))
+					{
+						flag = false;
+					}
+				}	
+			}*/
+			
+			
+			
+			
+			
+			/*out.print("Witaj serwerze\n");
 			// Czytam to co wpisal user
 			while ((userInput = stdIn.readLine()) != null) 
-			{
-				
+			{	
 				// Odpowiadam serwerowi
 				out.println(userInput);
 				out.flush();
@@ -88,49 +192,29 @@ public class Client
 						//Logout(socket, out, in, stdIn);
 					}
 					System.out.println("Server: " + serverAnswer);
-				}
-
-				
+				}	
 			}
-			
-			
-			// Zamykanie bufferow
-			out.close();
-			in.close();
-			stdIn.close();
+			*/
 		} 
 		catch (IOException e) 
 		{
 			System.out.println("BLAD: nie mozna pobrac danych z serwera" + e);
-			//Logout(socket, out, in, stdIn);
-			try 
-			{
-				System.out.println("Zamykanie polaczenia z serwerem");
+		}	
+		finally
+		{
+			// Zamkniecie bufferow
+        	try 
+        	{
+        		System.out.println("Wylogowuje cie z serwera");
+				in.close();
+				out.close();
 				socket.close();
-			} 
-			catch (IOException e1) 
-			{
-				System.out.println("BLAD: odlaczanie od serwera nie powiodlo sie");
 				System.exit(1);
-			}	
-		}	
+			} 
+        	catch (IOException e) 
+        	{
+				e.printStackTrace();
+			}
+		}
 	}
-
-/*	private static void Logout(Socket socket, PrintWriter out, BufferedReader in, BufferedReader stdIn) 
-	{
-		try 
-		{
-			// Zamykanie bufferow
-			System.out.println("Zamykanie polaczenia z serwerem");		
-			out.close();
-			in.close();
-			stdIn.close();
-			socket.close();
-		} 
-		catch (IOException e) 
-		{
-			System.out.println("BLAD: odlaczanie od serwera nie powiodlo sie");
-			System.exit(1);
-		}	
-	}*/
 }

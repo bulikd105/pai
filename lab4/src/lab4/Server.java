@@ -44,34 +44,38 @@ public class Server implements Runnable
             String userInput = "";
             boolean flag = true;
             
-            out.println("Witamy w naszym banku\n");
-            
+            out.println("Witamy w naszym banku\nTwój numer to: " + this.clientNumber);
+           
             // Uruchomienie glownej petli
-            while((userInput = in.readLine()) != null && flag == true)
+            //while((userInput = in.readLine()) != null && flag == true)
+            while(flag == true)
             {
             	out.println("Wybierz operacje ktora chcesz wykonac:");
             	out.println("1 - Wyswietl liste dostepnych uslug\n2 - Wyswietl liste swoich uslug\n" + 
             					   "3 - Dodaj nowa usluge\n4 - Wycofaj swoja usluge\n5 - Zarezerwuj usluge\n6 - Wyjdz");
-        		System.out.println("Klient: " + this.clientNumber + " wybral opcje " + userInput);
-            	switch(userInput)
-            	{
-    				case "1" : 	DisplayList(serviceList,out);
-    							break;
-    				case "2" : 	DisplayYourList(serviceList, out);
-    							break;
-    				case "3" : 	ServiceAdd(serviceList);
-    							break;
-    				case "4" : 	ServiceRemove(serviceList);
-    							break;
-    				case "5" : 	ServiceReserve(serviceList);
-    							break;
-    				case "6" : 	out.println(LOGOUT);
-    							System.out.println("Klient: " + this.clientNumber + " wylogowuje sie");
-    							flag = false;
-    							break;
-    				default  : 	out.println("Nie ma takiej opcji\n");	
-    						   	break;
-            	}
+            	userInput = in.readLine();
+
+            		switch(userInput)
+	            	{
+	    				case "1" : 	DisplayList(serviceList,out);
+	    							break;
+	    				case "2" : 	DisplayYourList(serviceList, out);
+	    							break;
+	    				case "3" : 	ServiceAdd(serviceList);
+	    							break;
+	    				case "4" : 	ServiceRemove(serviceList);
+	    							break;
+	    				case "5" : 	ServiceReserve(serviceList);
+	    							break;
+	    				case "6" : 	out.println(LOGOUT);
+	    							System.out.println("Klient: " + this.clientNumber + " wylogowuje sie");
+	    							flag = false;
+	    							break;
+	    				default  : 	out.println("Nie ma takiej opcji\n");	
+	    						   	break;
+	            	}
+	        		System.out.println("Klient: " + this.clientNumber + " wybral opcje " + userInput);
+
             }
 		}
 		catch(IOException e)
