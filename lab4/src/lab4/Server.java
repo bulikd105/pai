@@ -14,6 +14,7 @@ public class Server implements Runnable
 	private final static String SERVICE_RESERVED 	= "zarezerwowana";
 	private final static String SERVICE_UNUSED 		= "nieuzywana";
 	private final static String SERVICE_WITHDRAWN 	= "wycofana";
+	private final static String LOGOUT			 	= "logout";
 	
 	// Glowne pola serwera dla danego klienta
 	private Socket socket;
@@ -32,17 +33,21 @@ public class Server implements Runnable
 	@Override
 	public void run() 
 	{
+		BufferedReader in = null;
+        PrintWriter out = null;
+		
 		try
 		{
 			// Bufery do odbierania i wysylania wiadomosci
-            BufferedReader in = new BufferedReader( new InputStreamReader(socket.getInputStream()));
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            in = new BufferedReader( new InputStreamReader(socket.getInputStream()));
+            out = new PrintWriter(socket.getOutputStream(), true);
             String userInput = "";
+            boolean flag = true;
             
             out.println("Witamy w naszym banku\n");
             
             // Uruchomienie glownej petli
-            while((userInput = in.readLine()) != null)
+            while((userInput = in.readLine()) != null && flag == true)
             {
             	out.println("Wybierz operacje ktora chcesz wykonac:");
             	out.println("1 - Wyswietl liste dostepnych uslug\n2 - Wyswietl liste swoich uslug\n" + 
@@ -60,16 +65,14 @@ public class Server implements Runnable
     							break;
     				case "5" : 	ServiceReserve(serviceList);
     							break;
-    				case "6" : 	Logout();
+    				case "6" : 	out.println(LOGOUT);
+    							System.out.println("Klient: " + this.clientNumber + " wylogowuje sie");
+    							flag = false;
     							break;
     				default  : 	out.println("Nie ma takiej opcji\n");	
     						   	break;
             	}
             }
-            
-        	// Zamkniecie bufferow
-        	in.close();
-        	out.close();
 		}
 		catch(IOException e)
 		{
@@ -77,23 +80,20 @@ public class Server implements Runnable
 		}
 		finally // W razie gdyby klient zglosil blad, rozlacz go
 		{
-			Logout();
+        	// Zamkniecie bufferow
+        	try 
+        	{
+				in.close();
+				out.close();
+				socket.close();
+			} 
+        	catch (IOException e) 
+        	{
+				e.printStackTrace();
+			}
 		}
 	}
-
-	private void Logout() 
-	{
-		try
-		{
-			System.out.println("Odlaczanie klienta nr: " + clientNumber);
-			socket.close();
-		}
-		catch (IOException e) 
-		{
-			 System.out.println("Odlaczanie klienta nr: " + clientNumber + " nie powiodlo sie");
-		}
-	}
-
+	
 	// Zarezerwuj usluge
 	private MyService ServiceReserve(ArrayList<MyService> serviceList) 
 	{
