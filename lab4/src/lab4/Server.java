@@ -54,7 +54,9 @@ public class Server implements Runnable
             	out.println("1 - Wyswietl liste dostepnych uslug\n2 - Wyswietl liste swoich uslug\n" + 
             					   "3 - Dodaj nowa usluge\n4 - Wycofaj swoja usluge\n5 - Zarezerwuj usluge\n6 - Wyjdz");
             	userInput = in.readLine();
-
+            		
+            	if((userInput = in.readLine()) != null && userInput.length() > 0)
+            	{
             		switch(userInput)
 	            	{
 	    				case "1" : 	DisplayList(serviceList,out);
@@ -75,7 +77,12 @@ public class Server implements Runnable
 	    						   	break;
 	            	}
 	        		System.out.println("Klient: " + this.clientNumber + " wybral opcje " + userInput);
-
+            		
+            	}
+            	else
+            	{
+            		out.println("Nie ma takiej opcji\n");
+            	}
             }
 		}
 		catch(IOException e)
