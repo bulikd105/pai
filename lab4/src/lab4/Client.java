@@ -41,17 +41,41 @@ public class Client
 		try 
 		{		
 			// Zmienne do przechwytywania odpowiedzi
-			String userInput = "Witaj serwerze";
+			String userInput = "1";
 			String serverAnswer = "";
 			boolean flag = true;
 		
 			// Inicjalizacja bufferow
 			out = new PrintWriter(socket.getOutputStream(), true);
-			//in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			stdIn = new BufferedReader(new InputStreamReader(System.in));
 		
+			out.println(userInput);
+			
+			while ((userInput = stdIn.readLine()) != null && userInput.length() > 0);
+			{	
+				//in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				
+				// Czytam to co odpowiedzial serwer / Sprawdz czy odpowiedz nie jest null i jest dluzsza niz 0 znakow
+				while((serverAnswer = in.readLine()) != null && serverAnswer.length() > 0)
+				{
+					System.out.println("Server: " + serverAnswer);
+					// Zamykanie socketu
+					if(serverAnswer.equals("logout"))
+					{
+						flag = false;
+						break;
+					}
+				}	
+				
+				// Odpowiadam serwerowi
+				out.println(userInput);
+
+			}
+			 
+			
 			// Czytam to co wpisal user
-			do
+/*			do
 			{	
 				// Odpowiadam serwerowi
 				out.println(userInput);
@@ -70,7 +94,7 @@ public class Client
 					}
 				}	
 			}
-			while ((userInput = stdIn.readLine()) != null && userInput.length() > 0 && flag == true); 
+			while ((userInput = stdIn.readLine()) != null && userInput.length() > 0 && flag == true); */
 			
 		} 
 		catch (IOException e) 

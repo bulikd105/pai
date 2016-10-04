@@ -38,21 +38,66 @@ public class Server implements Runnable
 		
 		try
 		{
-			// Bufery do odbierania i wysylania wiadomosci
-            in = new BufferedReader( new InputStreamReader(socket.getInputStream()));
+			// Bufery do odbierania i wysylania wiadomosci			
             out = new PrintWriter(socket.getOutputStream(), true);
-            String userInput = "";
+            String userInput = "cos";
             boolean flag = true;
             
             out.println("Witamy w naszym banku\nTwój numer to: " + this.clientNumber);
+/*            out.println("--------------------------------------");
+          	out.println("Wybierz operacje ktora chcesz wykonac:");
+          	out.println("1 - Wyswietl liste dostepnych uslug\n2 - Wyswietl liste swoich uslug\n" + 
+          					   "3 - Dodaj nowa usluge\n4 - Wycofaj swoja usluge\n5 - Zarezerwuj usluge\n6 - Wyjdz");*/
+        	
+        	//in = new BufferedReader( new InputStreamReader(socket.getInputStream()));
+        	 	
+        	while(userInput != null && userInput.length() > 0)
+        	{
+          		out.println("--------------------------------------");
+	          	out.println("Wybierz operacje ktora chcesz wykonac:");
+	          	out.println("1 - Wyswietl liste dostepnych uslug\n2 - Wyswietl liste swoich uslug\n" + 
+	          					   "3 - Dodaj nowa usluge\n4 - Wycofaj swoja usluge\n5 - Zarezerwuj usluge\n6 - Wyjdz");
+	          	
+	          	in = new BufferedReader( new InputStreamReader(socket.getInputStream()));  
+	          	userInput = in.readLine(); 
+	          	
+	          	System.out.println("Klient: " + this.clientNumber + " powiedzial - " + userInput);       	
+
+          		switch(userInput)
+            	{
+    				case "1" : 	DisplayList(serviceList,out);
+    							break;
+    				case "2" : 	DisplayYourList(serviceList, out);
+    							break;
+    				case "3" : 	ServiceAdd(serviceList);
+    							break;
+    				case "4" : 	ServiceRemove(serviceList);
+    							break;
+    				case "5" : 	ServiceReserve(serviceList);
+    							break;
+    				case "6" : 	out.println(LOGOUT);
+    							System.out.println("Klient: " + this.clientNumber + " wylogowuje sie");
+    							flag = false;
+    							break;
+    				default  : 	out.println("Nie ma takiej opcji\n");	
+    						   	break;
+            	} 
+          		
+
+        	}
+        	
+        	
+        	
            
             // Uruchomienie glownej petli
             //while((userInput = in.readLine()) != null && flag == true)
-            while(flag == true)
+          /*  do
             {
+            	
             	out.println("Wybierz operacje ktora chcesz wykonac:");
             	out.println("1 - Wyswietl liste dostepnych uslug\n2 - Wyswietl liste swoich uslug\n" + 
             					   "3 - Dodaj nowa usluge\n4 - Wycofaj swoja usluge\n5 - Zarezerwuj usluge\n6 - Wyjdz");
+            	        	
             	userInput = in.readLine();
             	System.out.println("Klient: " + this.clientNumber + " powiedzial - " + userInput);
             	if(userInput != null && userInput.length() > 0)
@@ -82,7 +127,9 @@ public class Server implements Runnable
             		System.out.println("Klient: " + this.clientNumber + " przeslal null'a, zamykajac tym samym polaczenie");
             		break;
             	}
-            }
+            	
+            	in = new BufferedReader( new InputStreamReader(socket.getInputStream()));
+            }while(flag == true);*/
 		}
 		catch(IOException e)
 		{
@@ -137,7 +184,7 @@ public class Server implements Runnable
 		// Tworzymy temp liste dla uslug klienta
 		ArrayList<MyService> clientList = new ArrayList<MyService>();
 		
-		out.println("WYSWIETL LISTE WYSTAWIONYCH PRZEZ CIEBIE USLUG\n");
+		out.println("WYSWIETL LISTE WYSTAWIONYCH PRZEZ CIEBIE USLUG");
 		// Sprawdzamy czy lista uslug nie jest pusta
 		if(!serviceList.isEmpty())
 		{
@@ -149,35 +196,35 @@ public class Server implements Runnable
 					clientList.add(service);
 				}
 			}
-		}
-		else
-		{
-			out.println("Lista wszystkich uslug jest pusta");
-		}
-		
-		// Sprawdzamy czy list uslug tego klienta nie jest pusta
-		if(!clientList.isEmpty())
-		{
-			// Wyswietl wszystkie uslugi tego klienta
-			for(MyService service : clientList)
+			
+			// Sprawdzamy czy list uslug tego klienta nie jest pusta
+			if(!clientList.isEmpty())
 			{
-				out.println("Tworca: " + service.getOrderOwner());
-				out.println("Usluga nr: " + service.getOrderIndex());
-				out.println("Nazwa: " + service.getOrderName());
-				out.println("Termin wykonania: " + service.getOrderDate());
-				out.println("Status: " + service.getOrderStatus());
+				// Wyswietl wszystkie uslugi tego klienta
+				for(MyService service : clientList)
+				{
+					out.println("Tworca: " + service.getOrderOwner());
+					out.println("Usluga nr: " + service.getOrderIndex());
+					out.println("Nazwa: " + service.getOrderName());
+					out.println("Termin wykonania: " + service.getOrderDate());
+					out.println("Status: " + service.getOrderStatus());
+				}
+			}
+			else
+			{
+				out.println("Lista Twoich uslug jest pusta\n");
 			}
 		}
 		else
 		{
-			out.println("Lista Twoich uslug jest pusta");
+			out.println("Lista wszystkich uslug jest pusta\n");
 		}
 	}
 	
 	// Wyswietl liste wszystkich uslug
 	private void DisplayList(ArrayList<MyService> serviceList, PrintWriter out) 
 	{
-		out.println("WYSWIETL LISTE WSZYSTKICH USLUG\n");
+		out.println("WYSWIETL LISTE WSZYSTKICH USLUG");
 		// Sprawdzamy czy lista wszystkich uslug nie jest pusta
 		if(!serviceList.isEmpty())
 		{
@@ -193,7 +240,7 @@ public class Server implements Runnable
 		}
 		else
 		{
-			out.println("Lista wszystkich uslug jest pusta");
+			out.println("Lista wszystkich uslug jest pusta\n");
 		}
 	}
 }
