@@ -54,8 +54,8 @@ public class Server implements Runnable
             	out.println("1 - Wyswietl liste dostepnych uslug\n2 - Wyswietl liste swoich uslug\n" + 
             					   "3 - Dodaj nowa usluge\n4 - Wycofaj swoja usluge\n5 - Zarezerwuj usluge\n6 - Wyjdz");
             	userInput = in.readLine();
-            		
-            	if((userInput = in.readLine()) != null && userInput.length() > 0)
+            	System.out.println("Klient: " + this.clientNumber + " powiedzial - " + userInput);
+            	if(userInput != null && userInput.length() > 0)
             	{
             		switch(userInput)
 	            	{
@@ -75,13 +75,12 @@ public class Server implements Runnable
 	    							break;
 	    				default  : 	out.println("Nie ma takiej opcji\n");	
 	    						   	break;
-	            	}
-	        		System.out.println("Klient: " + this.clientNumber + " wybral opcje " + userInput);
-            		
+	            	}           		
             	}
             	else
             	{
-            		out.println("Nie ma takiej opcji\n");
+            		System.out.println("Klient: " + this.clientNumber + " przeslal null'a, zamykajac tym samym polaczenie");
+            		break;
             	}
             }
 		}
@@ -153,11 +152,11 @@ public class Server implements Runnable
 		}
 		else
 		{
-			out.println("Lista wszystkich uslug jest pusta\n");
+			out.println("Lista wszystkich uslug jest pusta");
 		}
 		
 		// Sprawdzamy czy list uslug tego klienta nie jest pusta
-		if(!serviceList.isEmpty())
+		if(!clientList.isEmpty())
 		{
 			// Wyswietl wszystkie uslugi tego klienta
 			for(MyService service : clientList)
@@ -171,7 +170,7 @@ public class Server implements Runnable
 		}
 		else
 		{
-			out.println("Lista Twoich uslug jest pusta\n");
+			out.println("Lista Twoich uslug jest pusta");
 		}
 	}
 	
@@ -194,7 +193,7 @@ public class Server implements Runnable
 		}
 		else
 		{
-			out.println("Lista wszystkich uslug jest pusta\n");
+			out.println("Lista wszystkich uslug jest pusta");
 		}
 	}
 }
