@@ -57,8 +57,28 @@ Uwagi:
 Brak
 
 Lab 4:
-
+Program słuzy do zarzadzania bankiem czasu. W pierwszej kolejnosci uruchamiany jest serwer, do ktorego podlaczaja sie klienci, mogacy dodac swoje uslugi w raz z czasem ich realizacji. Nastepnie inni kliencie moga rezerwowac te uslugi.
+Program sklada sie z czterech klas, ktore po krotce opisze:
+- MyService
+	Jest to klasa, do przechowywania uslug stworzonych przez klientow. Obiekt tej klasy posiada szesc pol: Nazwa tworcy, nazwa klienta, nazwa uslugi, czas wykonania uslugi, index uslugi, status uslugi. Do każdego z tych pol zostaly przygotowane getery oraz setery. A takze prosty konstruktor.
+- Bank
+	Jest to klasa, podobnie jak w zadaniu trzecim klasa Lab3, posiadająca metode main, ktora jest odpowiedzialna za uruchomienie serwera, oraz tworzenie nowych watkow, dla kazdego nowego klienta. Przechwouje ona takze statyczna liste uslug, dzieki ktorej kazdy nowy klient widzi wszystkie dostpne uslugi.
+- Client
+	Jest to klasa klienta. Pozwala ona na podlaczenie sie do serwera, oraz prosta komunikacje z nim. Po otrzymaniu odpowedzi od serwera weryfikuje, czy musi wykonac jakas dodatkowa akcje, jesli nie to odczytuje kolejne wiadomosci od serwera, az nie otrzyma pustej wiadomosci, lub akcji do wykonania.
+- Server
+	Jest to klasa posiadajaca wszystkie niezbedne elementy oraz metody podpiete pod menu. Kazdy uzytkownik po podlaczeniu do serwera, ma dostep do tych samych metod oraz listy uslug, ktora jest aktualizowana dla kazdego klienta.
+	
+Menu serwera przewiduje 7 przypadkow
+1 - Wyswietla wszystkie uslugi znajdujace sie na liscie uslug
+2 - Sprawdza id aktualnego uzytkownika i wyswietla wszystkie uslugi dodane przez niego
+3 - Sprawdza id uzytkownika, tworzy nowy obiekt uslugi, prosi o podanie nazwy i czasu realizacji tej uslugi. Nastepnie probuje dodac ta usluge do listy. W zaleznosci od wyniku operacji, wysle odpowiednia wiadomosc do klienta. 
+4 - Prosi uzytkownika o podanie swojej uslugi ktora chce anulowac. W przypadku gdy usluga nie istenieje zwroci odpowiednia odpowiedzi
+5 - Prosi o podanie klienta oraz uslugi dodanej przez niego. W przypadku gdy usluga nie instenieje, klient ktory dodal usluge nie istnieje, badz tworca uslugi jest on sam, zostanie zwrocona odpowiednia wiadomosc.
+6 - Wysyla do klienta prosbe o rozlaczenie sie.
+default - prosi o ponowne wybranie opcji z menu
+	
 Uwagi:
+Jest problem z tym ze menu serwera wyswietla sie nie w tej kolejnosci w ktorej powinno.
 
 Lab 5:
 
