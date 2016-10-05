@@ -61,7 +61,6 @@ public class Client
 				// Czytam to co odpowiedzial serwer / Sprawdz czy odpowiedz nie jest null i jest dluzsza niz 0 znakow
 				while((serverAnswer = in.readLine()) != null && serverAnswer.length() > 0 && flag == true)
 				{
-					temp = serverAnswer;
 					System.out.println("Server: " + serverAnswer);
 					// Zamykanie socketu
 					if(serverAnswer.equals("logout"))
@@ -74,10 +73,12 @@ public class Client
 					{
 						userInput = stdIn.readLine();
 						out.println(userInput);
+						flag = false;
 					}							
 				}	
+				flag = true;
 			}
-			while ((userInput = stdIn.readLine()) != null && userInput.length() > 0 && flag == true); 
+			while ((userInput = stdIn.readLine()) != null && userInput.length() > 0); 
 			
 		} 
 		catch (IOException e) 

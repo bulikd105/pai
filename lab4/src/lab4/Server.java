@@ -137,7 +137,7 @@ public class Server implements Runnable
 		}
 		catch(IOException | InterruptedException e)
 		{
-			System.out.println("Klient " + clientNumber + " zglosil blad: " + e);
+			System.out.println("Klient: " + clientNumber + " zglosil blad: " + e);
 		}
 		finally // W razie gdyby klient zglosil blad, rozlacz go
 		{
