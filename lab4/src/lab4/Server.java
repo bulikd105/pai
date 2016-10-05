@@ -12,7 +12,7 @@ public class Server implements Runnable
 	// Deklaracja stalych wartosci
 	private final static String SERVICE_NEW 		= "nowa";
 	private final static String SERVICE_RESERVED 	= "zarezerwowana";
-	private final static String SERVICE_UNUSED 		= "nieuzywana";
+	//private final static String SERVICE_UNUSED 		= "nieuzywana";
 	private final static String SERVICE_WITHDRAWN 	= "wycofana";
 	private final static String LOGOUT			 	= "logout";
 	
@@ -38,9 +38,7 @@ public class Server implements Runnable
         MyService service = null;
 		
 		try
-		{
-
-			
+		{	
 			// Bufery do odbierania i wysylania wiadomosci
             in = new BufferedReader( new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
@@ -92,6 +90,7 @@ public class Server implements Runnable
 
 	    							// Prosba o podanie danych przez usera
 	    							out.flush();
+	    							out.println("DODAJ USLUGE\n");
 		    						out.println("Podaj po przecinku, nazwe oraz czas wykonania zamowienia");
 		    						
 		    						// Pobranie danych od usera
@@ -121,6 +120,7 @@ public class Server implements Runnable
 	    							break;
 	    				case "4" : 	// Prosba o podanie danych przez usera
 			    					out.flush();
+			    					out.println("WYCOFAJ USLUGE\n");
 			    					out.println("Podaj numer swojej uslugi, ktora chcesz anulowac");
 
 			    					// Pobranie danych od usera
@@ -130,39 +130,78 @@ public class Server implements Runnable
 
 		    						if(userTempInput.length() > 0 && isNumeric(userTempInput))
 		    						{
-		    							System.out.println("cos4");
 		    							//Przeszukaj liste w poszukiwaniu uslug dodanych przez tego usera
 				    					index = Integer.parseInt(userTempInput);
 										for(MyService tempService : serviceList)
 					    				{
-											System.out.println("cos5" + index);
-											if(tempService.getOrderOwner() == clientNumber)
+											if(tempService.getOrderOwner() == clientNumber && tempService.getOrderIndex() == index)
 											{
-												if(tempService.getOrderIndex() == index)
-												{
+
 													// Update na liscie
 													tempService.setOrderStatus(SERVICE_WITHDRAWN);
 													serviceList.set(serviceList.indexOf(tempService), tempService);
 													
-													System.out.println(tempService.getOrderClient() + " " + tempService.getOrderDate() + " " + tempService.getOrderIndex() + " " + tempService.getOrderName() + " " + tempService.getOrderOwner() + " " + tempService.getOrderStatus());
-												}
+													System.out.println(tempService.getOrderClient() + " " + tempService.getOrderDate() + " " 
+																	 + tempService.getOrderIndex() + " " + tempService.getOrderName() + " " 
+																	 + tempService.getOrderOwner() + " " + tempService.getOrderStatus());
+													out.println("Gotowe");
+											}
+											else 
+											{
+												out.println("Klient: " + clientNumber + " nie ma pozycji - " + index);
 											}
 					    				}
-			    						
-			    						out.println("Gotowe");
 		    						}
 		    						else
 		    						{
 		    							out.println("Blad, popraw dane");
 		    						} 					
 	    							break;
-	    				case "5" : 	
-	    					
+	    				case "5" : 	// Prosba o podanie danych przez usera
 			    					out.flush();
+			    					out.println("ZAREZERWUJ USLUGE\n");
 			    					out.println("Podaj po przecinku, numer klienta, oraz jego usluge ktora chcesz zamowic");
 	    					
-	    					
-	    					
+			    					// Pobranie danych od usera
+		    						in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		    						userTempInput = in.readLine();
+		    						
+		    						// Rozdzielenie danych wzietych od usera
+		    						tempTable = userTempInput.split(",");
+		    						if(tempTable.length > 1 && isNumeric(tempTable[0]) && isNumeric(tempTable[1]))
+		    						{
+		    							//Przeszukaj liste w poszukiwaniu uslug dodanych przez tego usera
+										for(MyService tempService : serviceList)
+					    				{
+											if(tempService.getOrderOwner() == Integer.parseInt(tempTable[0]))
+											{
+												if(tempService.getOrderIndex() == Integer.parseInt(tempTable[1]))
+												{
+													// Update na liscie
+													tempService.setOrderStatus(SERVICE_RESERVED);
+													tempService.setOrderClient(clientNumber);
+													serviceList.set(serviceList.indexOf(tempService), tempService);
+													
+													System.out.println(tempService.getOrderClient() + " " + tempService.getOrderDate() + " " 
+																  	 + tempService.getOrderIndex() + " " + tempService.getOrderName() + " " 
+																  	 + tempService.getOrderOwner() + " " + tempService.getOrderStatus());
+													out.println("Gotowe");
+												}
+												else 
+												{
+													out.println("Klient: " + tempTable[0] + " nie ma pozycji - " + tempTable[1]);	
+												}
+											}
+											else 
+											{
+												out.println("Klient: " + tempTable[0] + " nie istnieje");
+											}
+					    				}
+		    						}
+		    						else
+		    						{
+		    							out.println("Blad, popraw dane");
+		    						} 					
 	    							break;
 	    				case "6" : 	out.println(LOGOUT);
 	    							System.out.println("Klient: " + this.clientNumber + " wylogowuje sie");
