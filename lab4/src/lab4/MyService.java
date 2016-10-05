@@ -9,11 +9,31 @@ public class MyService
 	private String orderName;	// Nazwa zamowienia
 	private String orderStatus; // Status uslugi: nowa, zarezerwowana, niewykorzystana, wycofana
 	
-	public MyService(int orderOwner, int orderIndex, int orderDate, String orderName)
+	public MyService(int orderOwner, int orderIndex, String orderStatus)
 	{
 		this.orderOwner = orderOwner;
+		this.orderClient = 0;
 		this.orderIndex = orderIndex;
+		this.orderStatus = orderStatus;
+	}
+
+	public void setOrderOwner(int orderOwner) 
+	{
+		this.orderOwner = orderOwner;
+	}
+
+	public void setOrderIndex(int orderIndex) 
+	{
+		this.orderIndex = orderIndex;
+	}
+
+	public void setOrderDate(int orderDate) 
+	{
 		this.orderDate = orderDate;
+	}
+
+	public void setOrderName(String orderName)
+	{
 		this.orderName = orderName;
 	}
 

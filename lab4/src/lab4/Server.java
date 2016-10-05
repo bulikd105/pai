@@ -71,7 +71,17 @@ public class Server implements Runnable
 	    				case "2" : 	answer = DisplayYourList(serviceList);
 	    							out.println(answer);
 	    							break;
-	    				case "3" : 	ServiceAdd(serviceList);
+	    				case "3" : 	
+			    					MyService service = new MyService(clientNumber, 3, SERVICE_NEW);
+		
+		    						out.println("Podaj nazwe zamowienia");
+		    						service.setOrderName(in.readLine());
+		    						out.println("Podaj czas zamowienia");
+		    						service.setOrderDate(Integer.parseInt(in.readLine()));
+
+
+	    							//serviceList.add(ServiceAdd(out, in));
+	    							//ServiceAdd(serviceList);
 	    							break;
 	    				case "4" : 	ServiceRemove(serviceList);
 	    							break;
@@ -132,12 +142,24 @@ public class Server implements Runnable
 	}
 
 	// Dodaj usluge
-	private MyService ServiceAdd(ArrayList<MyService> serviceList) 
+	private MyService ServiceAdd(PrintWriter out, BufferedReader in) 
 	{
-		MyService service = null;
-		
+		MyService service = new MyService(clientNumber, 3, SERVICE_NEW);
+		try
+		{			
+			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			out.println("Podaj nazwe zamowienia");
+			service.setOrderName(in.readLine());
+			out.println("Podaj czas zamowienia");
+			service.setOrderDate(Integer.parseInt(in.readLine()));
+			
+			return service;	
+		}
+		catch(IOException e)
+		{
+			out.println("Biedne dane");
+		}
 		return service;
-		
 	}
 
 	// Wyswietl liste uslug danego uzytkownika
@@ -172,6 +194,7 @@ public class Server implements Runnable
 					sb.append("Nazwa: " + service.getOrderName() + "\n");
 					sb.append("Termin wykonania: " + service.getOrderDate() + "\n");
 					sb.append("Status: " + service.getOrderStatus() + "\n");
+					sb.append("Wynajete przez: " + service.getOrderClient() + "\n");
 				}
 			}
 			else
@@ -199,11 +222,13 @@ public class Server implements Runnable
 			// Wyswietlamy liste wszystkich uslg
 			for(MyService service : serviceList)
 			{
+				sb.append("----------------------------------------\n");
 				sb.append("Tworca: " + service.getOrderOwner() + "\n");
 				sb.append("Usluga nr: " + service.getOrderIndex() + "\n");
 				sb.append("Nazwa: " + service.getOrderName() + "\n");
 				sb.append("Termin wykonania: " + service.getOrderDate() + "\n");
 				sb.append("Status: " + service.getOrderStatus() + "\n");
+				sb.append("Wynajete przez: " + service.getOrderClient() + "\n");
 			}
 		}
 		else
