@@ -46,6 +46,8 @@ public class Server implements Runnable
             String userInput = "";
             boolean flag = true;
             
+            String answer;
+            
             out.println("Witamy w naszym banku\nTwój numer to: " + this.clientNumber);
            
             // Uruchomienie glownej petli
@@ -57,13 +59,16 @@ public class Server implements Runnable
             					   "3 - Dodaj nowa usluge\n4 - Wycofaj swoja usluge\n5 - Zarezerwuj usluge\n6 - Wyjdz");
             	userInput = in.readLine();
             	System.out.println("Klient: " + this.clientNumber + " powiedzial - " + userInput);
+            	Thread.sleep(1000);
             	if(userInput != null && userInput.length() > 0)
             	{
             		switch(userInput)
 	            	{
-	    				case "1" : 	DisplayList(serviceList,out);
+	    				case "1" : 	answer = DisplayList(serviceList);
+	    							out.println(answer);
 	    							break;
-	    				case "2" : 	DisplayYourList(serviceList, out);
+	    				case "2" : 	answer = DisplayYourList(serviceList);
+	    							out.println(answer);
 	    							break;
 	    				case "3" : 	ServiceAdd(serviceList);
 	    							break;
@@ -86,7 +91,7 @@ public class Server implements Runnable
             	}
             }
 		}
-		catch(IOException e)
+		catch(IOException | InterruptedException e)
 		{
 			System.out.println("Klient " + clientNumber + " zglosil blad: " + e);
 		}
@@ -106,6 +111,7 @@ public class Server implements Runnable
 		}
 	}
 	
+
 	private void Fill() 
 	{
 		MyService obj1 = new MyService(1, 1, 10, "obj1");
@@ -152,13 +158,15 @@ public class Server implements Runnable
 	}
 
 	// Wyswietl liste uslug danego uzytkownika
-	private void DisplayYourList(ArrayList<MyService> serviceList, PrintWriter out) 
+	private String DisplayYourList(ArrayList<MyService> serviceList) 
 	{
 		// Tworzymy temp liste dla uslug klienta
 		ArrayList<MyService> clientList = new ArrayList<MyService>();
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("WYSWIETL LISTE TWOICH USLUG\n");
 		
-		out.println("WYSWIETL LISTE WYSTAWIONYCH PRZEZ CIEBIE USLUG\n");
-		// Sprawdzamy czy lista uslug nie jest pusta
+		// Sprawdzamy czy lista wszystkich uslug nie jest pusta
 		if(!serviceList.isEmpty())
 		{
 			// Przeszukujemy liste wszystkich uslug w poszukiwaniu uslug konkretnego klienta
@@ -169,52 +177,57 @@ public class Server implements Runnable
 					clientList.add(service);
 				}
 			}
-		}
-		else
-		{
-			out.println("Lista wszystkich uslug jest pusta");
-		}
-		
-		// Sprawdzamy czy list uslug tego klienta nie jest pusta
-		if(!clientList.isEmpty())
-		{
-			// Wyswietl wszystkie uslugi tego klienta
-			for(MyService service : clientList)
+			
+			// Sprawdzamy czy list uslug tego klienta nie jest pusta
+			if(!clientList.isEmpty())
 			{
-				out.println("Tworca: " + service.getOrderOwner());
-				out.println("Usluga nr: " + service.getOrderIndex());
-				out.println("Nazwa: " + service.getOrderName());
-				out.println("Termin wykonania: " + service.getOrderDate());
-				out.println("Status: " + service.getOrderStatus());
+				// Wyswietl wszystkie uslugi tego klienta
+				for(MyService service : clientList)
+				{
+					sb.append("Tworca: " + service.getOrderOwner() + "\n");
+					sb.append("Usluga nr: " + service.getOrderIndex() + "\n");
+					sb.append("Nazwa: " + service.getOrderName() + "\n");
+					sb.append("Termin wykonania: " + service.getOrderDate() + "\n");
+					sb.append("Status: " + service.getOrderStatus() + "\n");
+				}
+			}
+			else
+			{
+				sb.append("Lista Twoich uslug jest pusta");
 			}
 		}
 		else
 		{
-			out.println("Lista Twoich uslug jest pusta");
+			sb.append("Lista wszystkich uslug jest pusta");
 		}
+		return sb.toString();		
 	}
 	
 	// Wyswietl liste wszystkich uslug
-	private void DisplayList(ArrayList<MyService> serviceList, PrintWriter out) 
+	private String DisplayList(ArrayList<MyService> serviceList) 
 	{
-		out.println("WYSWIETL LISTE WSZYSTKICH USLUG\n");
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("WYSWIETL LISTE WSZYSTKICH USLUG\n");
+		
 		// Sprawdzamy czy lista wszystkich uslug nie jest pusta
 		if(!serviceList.isEmpty())
 		{
 			// Wyswietlamy liste wszystkich uslg
 			for(MyService service : serviceList)
 			{
-				out.println("Tworca: " + service.getOrderOwner());
-				out.println("Usluga nr: " + service.getOrderIndex());
-				out.println("Nazwa: " + service.getOrderName());
-				out.println("Termin wykonania: " + service.getOrderDate());
-				out.println("Status: " + service.getOrderStatus());
+				sb.append("Tworca: " + service.getOrderOwner() + "\n");
+				sb.append("Usluga nr: " + service.getOrderIndex() + "\n");
+				sb.append("Nazwa: " + service.getOrderName() + "\n");
+				sb.append("Termin wykonania: " + service.getOrderDate() + "\n");
+				sb.append("Status: " + service.getOrderStatus() + "\n");
 			}
 		}
 		else
 		{
-			out.println("Lista wszystkich uslug jest pusta");
+			sb.append("Lista wszystkich uslug jest pusta");
 		}
+		return sb.toString();
 	}
 }
 	
