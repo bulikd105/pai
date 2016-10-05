@@ -76,15 +76,15 @@ public class Client
 						out.println(userInput);
 					}
 					
-					// Zamowienie uslugi
-					if(serverAnswer.equals("Podaj po przecinku, numer klienta, oraz jego usluge ktora chcesz zamowic"))
+					// Anulowanie zamowienia
+					if(serverAnswer.equals("Podaj numer swojej uslugi, ktora chcesz anulowac"))
 					{
 						userInput = stdIn.readLine();
 						out.println(userInput);
 					}
 					
-					// Anulowanie zamowienia
-					if(serverAnswer.equals("Podaj po przecinku, numer swojej uslugi, ktora chcesz anulowac"))
+					// Zamowienie uslugi
+					if(serverAnswer.equals("Podaj po przecinku, numer klienta, oraz jego usluge ktora chcesz zamowic"))
 					{
 						userInput = stdIn.readLine();
 						out.println(userInput);

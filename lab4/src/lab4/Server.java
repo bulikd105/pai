@@ -122,18 +122,20 @@ public class Server implements Runnable
 	    				case "4" : 	// Prosba o podanie danych przez usera
 			    					out.flush();
 			    					out.println("Podaj numer swojej uslugi, ktora chcesz anulowac");
-			    					
+
 			    					// Pobranie danych od usera
 		    						in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
 		    						userTempInput = in.readLine();
-		    						
-		    						if(isNumeric(tempTable[0]))
+
+		    						if(userTempInput.length() > 0 && isNumeric(userTempInput))
 		    						{
+		    							System.out.println("cos4");
 		    							//Przeszukaj liste w poszukiwaniu uslug dodanych przez tego usera
-				    					index = Integer.parseInt(tempTable[0]);
+				    					index = Integer.parseInt(userTempInput);
 										for(MyService tempService : serviceList)
 					    				{
-											
+											System.out.println("cos5" + index);
 											if(tempService.getOrderOwner() == clientNumber)
 											{
 												if(tempService.getOrderIndex() == index)
