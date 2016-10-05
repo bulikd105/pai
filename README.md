@@ -69,13 +69,13 @@ Program sklada sie z czterech klas, ktore po krotce opisze:
 	Jest to klasa posiadajaca wszystkie niezbedne elementy oraz metody podpiete pod menu. Kazdy uzytkownik po podlaczeniu do serwera, ma dostep do tych samych metod oraz listy uslug, ktora jest aktualizowana dla kazdego klienta.
 	
 Menu serwera przewiduje 7 przypadkow
-1 - Wyswietla wszystkie uslugi znajdujace sie na liscie uslug
-2 - Sprawdza id aktualnego uzytkownika i wyswietla wszystkie uslugi dodane przez niego
-3 - Sprawdza id uzytkownika, tworzy nowy obiekt uslugi, prosi o podanie nazwy i czasu realizacji tej uslugi. Nastepnie probuje dodac ta usluge do listy. W zaleznosci od wyniku operacji, wysle odpowiednia wiadomosc do klienta. 
-4 - Prosi uzytkownika o podanie swojej uslugi ktora chce anulowac. W przypadku gdy usluga nie istenieje zwroci odpowiednia odpowiedzi
-5 - Prosi o podanie klienta oraz uslugi dodanej przez niego. W przypadku gdy usluga nie instenieje, klient ktory dodal usluge nie istnieje, badz tworca uslugi jest on sam, zostanie zwrocona odpowiednia wiadomosc.
-6 - Wysyla do klienta prosbe o rozlaczenie sie.
-default - prosi o ponowne wybranie opcji z menu
+- 1 - Wyswietla wszystkie uslugi znajdujace sie na liscie uslug
+- 2 - Sprawdza id aktualnego uzytkownika i wyswietla wszystkie uslugi dodane przez niego
+- 3 - Sprawdza id uzytkownika, tworzy nowy obiekt uslugi, prosi o podanie nazwy i czasu realizacji tej uslugi. Nastepnie probuje dodac ta usluge do listy. W zaleznosci od wyniku operacji, wysle odpowiednia wiadomosc do klienta. 
+- 4 - Prosi uzytkownika o podanie swojej uslugi ktora chce anulowac. W przypadku gdy usluga nie istenieje zwroci odpowiednia odpowiedzi
+- 5 - Prosi o podanie klienta oraz uslugi dodanej przez niego. W przypadku gdy usluga nie instenieje, klient ktory dodal usluge nie istnieje, badz tworca uslugi jest on sam, zostanie zwrocona odpowiednia wiadomosc.
+- 6 - Wysyla do klienta prosbe o rozlaczenie sie.
+- default - prosi o ponowne wybranie opcji z menu
 	
 Uwagi:
 Jest problem z tym ze menu serwera wyswietla sie nie w tej kolejnosci w ktorej powinno.
