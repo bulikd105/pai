@@ -35,6 +35,7 @@ public class Server implements Runnable
 	{
 		BufferedReader in = null;
         PrintWriter out = null;
+        MyService service = null;
 		
 		try
 		{
@@ -44,6 +45,8 @@ public class Server implements Runnable
             in = new BufferedReader( new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
             String userInput = "";
+            String userTempInput = "";
+            String[] tempTable = new String[2];
             boolean flag = true;
             
             String answer;
@@ -71,13 +74,18 @@ public class Server implements Runnable
 	    				case "2" : 	answer = DisplayYourList(serviceList);
 	    							out.println(answer);
 	    							break;
-	    				case "3" : 	
-			    					MyService service = new MyService(clientNumber, 3, SERVICE_NEW);
-		
-		    						out.println("Podaj nazwe zamowienia");
-		    						service.setOrderName(in.readLine());
-		    						out.println("Podaj czas zamowienia");
-		    						service.setOrderDate(Integer.parseInt(in.readLine()));
+	    				case "3" : 	System.out.println("cos1");
+	    							service = new MyService(clientNumber, 3, SERVICE_NEW);
+	    							System.out.println("cos2");
+	    							out.flush();
+		    						out.println("Podaj nazwe i czas zamowienia po przecinku");
+		    						System.out.println("cos3");
+		    						in = new BufferedReader( new InputStreamReader(socket.getInputStream()));
+		    						userTempInput = in.readLine();
+		    						System.out.println("cos4");
+		    						tempTable = userTempInput.split(",");
+		    						service.setOrderName(tempTable[0]);
+		    						service.setOrderDate(Integer.parseInt(tempTable[1]));
 
 
 	    							//serviceList.add(ServiceAdd(out, in));
@@ -189,6 +197,7 @@ public class Server implements Runnable
 				// Wyswietl wszystkie uslugi tego klienta
 				for(MyService service : clientList)
 				{
+					sb.append("----------------------------------------\n");
 					sb.append("Tworca: " + service.getOrderOwner() + "\n");
 					sb.append("Usluga nr: " + service.getOrderIndex() + "\n");
 					sb.append("Nazwa: " + service.getOrderName() + "\n");

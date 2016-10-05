@@ -66,8 +66,14 @@ public class Client
 					if(serverAnswer.equals("logout"))
 					{
 						flag = false;
-						break;
+						return;
 					}
+					
+/*					if(serverAnswer == "Podaj nazwe i czas zamowienia po przecinku");
+					{
+						userInput = stdIn.readLine();
+						out.println(userInput);
+					}*/
 				}	
 			}
 			while ((userInput = stdIn.readLine()) != null && userInput.length() > 0 && flag == true); 
