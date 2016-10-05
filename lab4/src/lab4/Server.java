@@ -108,17 +108,30 @@ public class Server implements Runnable
 			    						
 			    						System.out.println(service.getOrderClient() + " " + service.getOrderDate() + " " + service.getOrderIndex() + " " + service.getOrderName() + " " + service.getOrderOwner() + " " + service.getOrderStatus());
 			    						
-			    						out.println("Zamowienie dodane");
+			    						out.println("Gotowe");
 		    						}
 		    						else
 		    						{
-		    							out.println("Zle dane, sprobuj dodac jeszcze raz");
+		    							out.println("Blad, popraw dane");
 		    						}
 		    						
 	    							break;
-	    				case "4" : 	ServiceRemove(serviceList);
+	    				case "4" : 	
+			    					out.flush();
+			    					out.println("Podaj po przecinku, numer swojej uslugi, ktora chcesz anulowac");
+		    						
+	    					
+	    					
+	    					
+	    					
 	    							break;
-	    				case "5" : 	ServiceReserve(serviceList);
+	    				case "5" : 	
+	    					
+			    					out.flush();
+			    					out.println("Podaj po przecinku, numer klienta, oraz jego usluge ktora chcesz zamowic");
+	    					
+	    					
+	    					
 	    							break;
 	    				case "6" : 	out.println(LOGOUT);
 	    							System.out.println("Klient: " + this.clientNumber + " wylogowuje sie");
@@ -168,46 +181,6 @@ public class Server implements Runnable
 		return true;  
 	}
 	
-
-	// Zarezerwuj usluge
-	private MyService ServiceReserve(ArrayList<MyService> serviceList) 
-	{
-		MyService service = null;
-		
-		return service;
-		
-	}
-
-	// Usun usluge
-	private MyService ServiceRemove(ArrayList<MyService> serviceList) 
-	{
-		MyService service = null;
-		
-		return service;
-		
-	}
-
-	// Dodaj usluge
-	private MyService ServiceAdd(PrintWriter out, BufferedReader in) 
-	{
-		MyService service = new MyService(clientNumber, 3, SERVICE_NEW);
-		try
-		{			
-			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			out.println("Podaj nazwe zamowienia");
-			service.setOrderName(in.readLine());
-			out.println("Podaj czas zamowienia");
-			service.setOrderDate(Integer.parseInt(in.readLine()));
-			
-			return service;	
-		}
-		catch(IOException e)
-		{
-			out.println("Biedne dane");
-		}
-		return service;
-	}
-
 	// Wyswietl liste uslug danego uzytkownika
 	private String DisplayYourList(ArrayList<MyService> serviceList) 
 	{

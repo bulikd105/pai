@@ -1,14 +1,10 @@
 package lab4;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-
-
-
 
 public class Client 
 {
@@ -23,8 +19,6 @@ public class Client
 		PrintWriter out = null;
 		BufferedReader in = null;
 		BufferedReader stdIn = null;
-
-		String temp;
 		
 		// Polaczenie sie do serwera
 		try
@@ -47,7 +41,6 @@ public class Client
 		
 			// Inicjalizacja bufferow
 			out = new PrintWriter(socket.getOutputStream(), true);
-			//in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			stdIn = new BufferedReader(new InputStreamReader(System.in));
 		
 			// Czytam to co wpisal user
@@ -56,25 +49,46 @@ public class Client
 				// Odpowiadam serwerowi
 				out.println(userInput);
 
+				// Czytam odpowiedz serwera
 				in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				
 				// Czytam to co odpowiedzial serwer / Sprawdz czy odpowiedz nie jest null i jest dluzsza niz 0 znakow
 				while((serverAnswer = in.readLine()) != null && serverAnswer.length() > 0 && flag == true)
 				{
 					System.out.println("Server: " + serverAnswer);
-					// Zamykanie socketu
+					
+					// Wylogowanie usera
 					if(serverAnswer.equals("logout"))
 					{
-						flag = false;
 						return;
 					}
 					
+					// Wyjscie z petli po otrzymaniu odpowiedzi
+					if(serverAnswer.equals("Gotowe") || serverAnswer.equals("Blad, popraw dane"))
+					{
+						flag = false;
+					}
+						
+					// Dodanie nowej uslugi
 					if(serverAnswer.equals("Podaj po przecinku, nazwe oraz czas wykonania zamowienia"))
 					{
 						userInput = stdIn.readLine();
 						out.println(userInput);
-						flag = false;
-					}							
+					}
+					
+					// Zamowienie uslugi
+					if(serverAnswer.equals("Podaj po przecinku, numer klienta, oraz jego usluge ktora chcesz zamowic"))
+					{
+						userInput = stdIn.readLine();
+						out.println(userInput);
+					}
+					
+					// Anulowanie zamowienia
+					if(serverAnswer.equals("Podaj po przecinku, numer swojej uslugi, ktora chcesz anulowac"))
+					{
+						userInput = stdIn.readLine();
+						out.println(userInput);
+					}
 				}	
 				flag = true;
 			}
