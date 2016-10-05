@@ -66,7 +66,7 @@ public class Client
 					if(serverAnswer.equals("logout"))
 					{
 						flag = false;
-						break;
+						return;
 					}
 				}	
 			}

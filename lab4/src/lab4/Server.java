@@ -20,7 +20,7 @@ public class Server implements Runnable
 	private Socket socket;
 	private int clientNumber;
 	private ArrayList<MyService> serviceList;
-	
+		
 	// Konstruktor
 	public Server(Socket socket, int clientNumber, ArrayList<MyService> serviceList) 
 	{
@@ -38,7 +38,7 @@ public class Server implements Runnable
 		
 		try
 		{
-			Fill();
+
 			
 			// Bufery do odbierania i wysylania wiadomosci
             in = new BufferedReader( new InputStreamReader(socket.getInputStream()));
@@ -59,6 +59,7 @@ public class Server implements Runnable
             					   "3 - Dodaj nowa usluge\n4 - Wycofaj swoja usluge\n5 - Zarezerwuj usluge\n6 - Wyjdz");
             	userInput = in.readLine();
             	System.out.println("Klient: " + this.clientNumber + " powiedzial - " + userInput);
+            	answer = "";
             	Thread.sleep(1000);
             	if(userInput != null && userInput.length() > 0)
             	{
@@ -111,24 +112,6 @@ public class Server implements Runnable
 		}
 	}
 	
-
-	private void Fill() 
-	{
-		MyService obj1 = new MyService(1, 1, 10, "obj1");
-		MyService obj2 = new MyService(1, 2, 20, "obj2");
-		MyService obj3 = new MyService(2, 1, 30, "obj3");
-		MyService obj4 = new MyService(3, 1, 40, "obj4");
-		
-		obj1.setOrderStatus(SERVICE_NEW);
-		obj2.setOrderStatus(SERVICE_NEW);
-		obj3.setOrderStatus(SERVICE_NEW);
-		obj4.setOrderStatus(SERVICE_NEW);
-		
-		serviceList.add(obj1);
-		serviceList.add(obj2);
-		serviceList.add(obj3);
-		serviceList.add(obj4);
-	}
 
 	// Zarezerwuj usluge
 	private MyService ServiceReserve(ArrayList<MyService> serviceList) 
