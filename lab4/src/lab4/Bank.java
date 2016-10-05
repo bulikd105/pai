@@ -51,10 +51,10 @@ public class Bank
 	
 	private static void Fill() 
 	{
-		MyService obj1 = new MyService(1, 1, "nowa");
-		MyService obj2 = new MyService(1, 2, "nowa");
-		MyService obj3 = new MyService(2, 1, "nowa");
-		MyService obj4 = new MyService(3, 1, "nowa");
+		MyService obj1 = new MyService(1, 1, "nieuzywana");
+		MyService obj2 = new MyService(1, 2, "nieuzywana");
+		MyService obj3 = new MyService(2, 1, "nieuzywana");
+		MyService obj4 = new MyService(3, 1, "nieuzywana");
 		
 		obj1.setOrderDate(10);
 		obj2.setOrderDate(20);
