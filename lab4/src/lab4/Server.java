@@ -74,22 +74,23 @@ public class Server implements Runnable
 	    				case "2" : 	answer = DisplayYourList(serviceList);
 	    							out.println(answer);
 	    							break;
-	    				case "3" : 	System.out.println("cos1");
-	    							service = new MyService(clientNumber, 3, SERVICE_NEW);
-	    							System.out.println("cos2");
+	    				case "3" : 	service = new MyService(clientNumber, 3, SERVICE_NEW);
+	    							
 	    							out.flush();
-		    						out.println("Podaj nazwe i czas zamowienia po przecinku");
-		    						System.out.println("cos3");
+		    						out.println("Podaj po przecinku, nazwe oraz czas wykonania zamowienia");
+		    						
 		    						in = new BufferedReader( new InputStreamReader(socket.getInputStream()));
 		    						userTempInput = in.readLine();
-		    						System.out.println("cos4");
+		    						
 		    						tempTable = userTempInput.split(",");
 		    						service.setOrderName(tempTable[0]);
 		    						service.setOrderDate(Integer.parseInt(tempTable[1]));
+		    						
+		    						serviceList.add(service);
+		    						System.out.println(service.getOrderClient() + " " + service.getOrderDate() + " " + service.getOrderIndex() + " " + service.getOrderName() + " " + service.getOrderOwner() + " " + service.getOrderStatus());
+		    						
+		    						out.println("Zamowienie dodane");
 
-
-	    							//serviceList.add(ServiceAdd(out, in));
-	    							//ServiceAdd(serviceList);
 	    							break;
 	    				case "4" : 	ServiceRemove(serviceList);
 	    							break;

@@ -24,7 +24,7 @@ public class Client
 		BufferedReader in = null;
 		BufferedReader stdIn = null;
 
-		DataInputStream dIS = null;
+		String temp;
 		
 		// Polaczenie sie do serwera
 		try
@@ -61,6 +61,7 @@ public class Client
 				// Czytam to co odpowiedzial serwer / Sprawdz czy odpowiedz nie jest null i jest dluzsza niz 0 znakow
 				while((serverAnswer = in.readLine()) != null && serverAnswer.length() > 0 && flag == true)
 				{
+					temp = serverAnswer;
 					System.out.println("Server: " + serverAnswer);
 					// Zamykanie socketu
 					if(serverAnswer.equals("logout"))
@@ -69,11 +70,11 @@ public class Client
 						return;
 					}
 					
-/*					if(serverAnswer == "Podaj nazwe i czas zamowienia po przecinku");
+					if(serverAnswer.equals("Podaj po przecinku, nazwe oraz czas wykonania zamowienia"))
 					{
 						userInput = stdIn.readLine();
 						out.println(userInput);
-					}*/
+					}							
 				}	
 			}
 			while ((userInput = stdIn.readLine()) != null && userInput.length() > 0 && flag == true); 
