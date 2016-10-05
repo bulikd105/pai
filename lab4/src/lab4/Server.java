@@ -74,23 +74,47 @@ public class Server implements Runnable
 	    				case "2" : 	answer = DisplayYourList(serviceList);
 	    							out.println(answer);
 	    							break;
-	    				case "3" : 	service = new MyService(clientNumber, 3, SERVICE_NEW);
+	    				case "3" : 	//Przeszukaj liste w poszukiwaniu uslug dodanych przez tego usera
+	    							int index = 0;
+	    							for(MyService tempService : serviceList)
+				    				{
+	    								if(tempService.getOrderOwner() == clientNumber)
+	    								{
+	    									index = tempService.getOrderIndex();
+	    								}
+				    				}
 	    							
+	    							// Stworz nowy obiekt dla tego klienta
+	    							service = new MyService(clientNumber, index++, SERVICE_NEW);
+	    							
+	    							// Prosba o podanie danych przez usera
 	    							out.flush();
 		    						out.println("Podaj po przecinku, nazwe oraz czas wykonania zamowienia");
 		    						
-		    						in = new BufferedReader( new InputStreamReader(socket.getInputStream()));
+		    						// Pobranie danych od usera
+		    						in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		    						userTempInput = in.readLine();
 		    						
+		    						// Rozdzielenie danych wzietych od usera
 		    						tempTable = userTempInput.split(",");
-		    						service.setOrderName(tempTable[0]);
-		    						service.setOrderDate(Integer.parseInt(tempTable[1]));
+		    						if(isNumeric(tempTable[1]))
+		    						{
+		    							// Dodaj dane otrzymane od usera
+		    							service.setOrderName(tempTable[0]);
+			    						service.setOrderDate(Integer.parseInt(tempTable[1]));
+			    						
+			    						// Dodaj dane do listy
+			    						serviceList.add(service);
+			    						
+			    						System.out.println(service.getOrderClient() + " " + service.getOrderDate() + " " + service.getOrderIndex() + " " + service.getOrderName() + " " + service.getOrderOwner() + " " + service.getOrderStatus());
+			    						
+			    						out.println("Zamowienie dodane");
+		    						}
+		    						else
+		    						{
+		    							out.println("Zle dane, sprobuj dodac jeszcze raz");
+		    						}
 		    						
-		    						serviceList.add(service);
-		    						System.out.println(service.getOrderClient() + " " + service.getOrderDate() + " " + service.getOrderIndex() + " " + service.getOrderName() + " " + service.getOrderOwner() + " " + service.getOrderStatus());
-		    						
-		    						out.println("Zamowienie dodane");
-
 	    							break;
 	    				case "4" : 	ServiceRemove(serviceList);
 	    							break;
@@ -129,6 +153,19 @@ public class Server implements Runnable
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public boolean isNumeric(String str)  
+	{  
+		try  
+		{  
+			int i = Integer.parseInt(str);  
+		}  
+		catch(NumberFormatException nfe)  
+		{  
+			return false;  
+		}  
+		return true;  
 	}
 	
 
