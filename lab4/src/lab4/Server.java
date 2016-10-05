@@ -12,7 +12,7 @@ public class Server implements Runnable
 	// Deklaracja stalych wartosci
 	private final static String SERVICE_NEW 		= "nowa";
 	private final static String SERVICE_RESERVED 	= "zarezerwowana";
-	//private final static String SERVICE_UNUSED 		= "nieuzywana";
+	private final static String SERVICE_UNUSED 		= "nieuzywana";
 	private final static String SERVICE_WITHDRAWN 	= "wycofana";
 	private final static String LOGOUT			 	= "logout";
 	
@@ -46,6 +46,9 @@ public class Server implements Runnable
             String userTempInput = "";
             String[] tempTable = new String[2];
             boolean flag = true;
+            boolean existsFlag = false;
+            boolean availableFlag = false;
+            boolean clientFlag = false;
             
             String answer;
             int index = 0;
@@ -90,7 +93,6 @@ public class Server implements Runnable
 
 	    							// Prosba o podanie danych przez usera
 	    							out.flush();
-	    							out.println("DODAJ USLUGE\n");
 		    						out.println("Podaj po przecinku, nazwe oraz czas wykonania zamowienia");
 		    						
 		    						// Pobranie danych od usera
@@ -120,7 +122,6 @@ public class Server implements Runnable
 	    							break;
 	    				case "4" : 	// Prosba o podanie danych przez usera
 			    					out.flush();
-			    					out.println("WYCOFAJ USLUGE\n");
 			    					out.println("Podaj numer swojej uslugi, ktora chcesz anulowac");
 
 			    					// Pobranie danych od usera
@@ -130,6 +131,7 @@ public class Server implements Runnable
 
 		    						if(userTempInput.length() > 0 && isNumeric(userTempInput))
 		    						{
+		    							existsFlag = false;
 		    							//Przeszukaj liste w poszukiwaniu uslug dodanych przez tego usera
 				    					index = Integer.parseInt(userTempInput);
 										for(MyService tempService : serviceList)
@@ -145,12 +147,14 @@ public class Server implements Runnable
 																	 + tempService.getOrderIndex() + " " + tempService.getOrderName() + " " 
 																	 + tempService.getOrderOwner() + " " + tempService.getOrderStatus());
 													out.println("Gotowe");
-											}
-											else 
-											{
-												out.println("Klient: " + clientNumber + " nie ma pozycji - " + index);
+													existsFlag = true;
 											}
 					    				}
+										if(existsFlag == false)
+										{
+											answer = ("Klient: " + clientNumber + " nie ma pozycji - " + index + "\nBlad, popraw dane");
+											out.println(answer);
+										}
 		    						}
 		    						else
 		    						{
@@ -159,7 +163,6 @@ public class Server implements Runnable
 	    							break;
 	    				case "5" : 	// Prosba o podanie danych przez usera
 			    					out.flush();
-			    					out.println("ZAREZERWUJ USLUGE\n");
 			    					out.println("Podaj po przecinku, numer klienta, oraz jego usluge ktora chcesz zamowic");
 	    					
 			    					// Pobranie danych od usera
@@ -170,33 +173,49 @@ public class Server implements Runnable
 		    						tempTable = userTempInput.split(",");
 		    						if(tempTable.length > 1 && isNumeric(tempTable[0]) && isNumeric(tempTable[1]))
 		    						{
+		    							existsFlag = false;
+		    							availableFlag = false;
+		    							clientFlag = false;
 		    							//Przeszukaj liste w poszukiwaniu uslug dodanych przez tego usera
 										for(MyService tempService : serviceList)
 					    				{
-											if(tempService.getOrderOwner() == Integer.parseInt(tempTable[0]))
+											if(clientNumber != Integer.parseInt(tempTable[0]))
 											{
-												if(tempService.getOrderIndex() == Integer.parseInt(tempTable[1]))
+												clientFlag = true;
+												if(tempService.getOrderOwner() == Integer.parseInt(tempTable[0]) && tempService.getOrderIndex() == Integer.parseInt(tempTable[1]))
 												{
-													// Update na liscie
-													tempService.setOrderStatus(SERVICE_RESERVED);
-													tempService.setOrderClient(clientNumber);
-													serviceList.set(serviceList.indexOf(tempService), tempService);
-													
-													System.out.println(tempService.getOrderClient() + " " + tempService.getOrderDate() + " " 
-																  	 + tempService.getOrderIndex() + " " + tempService.getOrderName() + " " 
-																  	 + tempService.getOrderOwner() + " " + tempService.getOrderStatus());
-													out.println("Gotowe");
+													existsFlag = true;
+													if(tempService.getOrderStatus().equals(SERVICE_NEW) || tempService.getOrderStatus().equals(SERVICE_UNUSED))
+													{
+														availableFlag = true;
+														// Update na liscie
+														tempService.setOrderStatus(SERVICE_RESERVED);
+														tempService.setOrderClient(clientNumber);
+														serviceList.set(serviceList.indexOf(tempService), tempService);
+														
+														System.out.println(tempService.getOrderClient() + " " + tempService.getOrderDate() + " " 
+																	  	 + tempService.getOrderIndex() + " " + tempService.getOrderName() + " " 
+																	  	 + tempService.getOrderOwner() + " " + tempService.getOrderStatus());
+														out.println("Gotowe");
+													}
 												}
-												else 
-												{
-													out.println("Klient: " + tempTable[0] + " nie ma pozycji - " + tempTable[1]);	
-												}
-											}
-											else 
-											{
-												out.println("Klient: " + tempTable[0] + " nie istnieje");
 											}
 					    				}
+										if(clientFlag == false)
+										{
+											answer = ("Klient: " + tempTable[0] + " nie moze zarezerwowac swojej uslug" + "\nBlad, popraw dane");	
+											out.println(answer);
+										}
+										else if(existsFlag == false)
+										{
+											answer = ("Klient: " + tempTable[0] + " nie istnieje, lub nie ma pozycji - " + tempTable[1] + "\nBlad, popraw dane");	
+											out.println(answer);
+										}
+										else if(availableFlag == false)
+										{
+											answer = ("Klient: " + tempTable[0] + " pozycja - " + tempTable[1] + " jest zajeta" + "\nBlad, popraw dane");
+											out.println(answer);
+										}
 		    						}
 		    						else
 		    						{
