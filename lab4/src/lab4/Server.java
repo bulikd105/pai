@@ -50,6 +50,7 @@ public class Server implements Runnable
             boolean flag = true;
             
             String answer;
+            int index = 0;
             
             out.println("Witamy w naszym banku\nTwój numer to: " + this.clientNumber);
            
@@ -75,7 +76,7 @@ public class Server implements Runnable
 	    							out.println(answer);
 	    							break;
 	    				case "3" : 	//Przeszukaj liste w poszukiwaniu uslug dodanych przez tego usera
-	    							int index = 0;
+	    							index = 0;
 	    							for(MyService tempService : serviceList)
 				    				{
 	    								if(tempService.getOrderOwner() == clientNumber)
@@ -83,10 +84,12 @@ public class Server implements Runnable
 	    									index = tempService.getOrderIndex();
 	    								}
 				    				}
-	    							
+;
+	    							index += 1;
+
 	    							// Stworz nowy obiekt dla tego klienta
-	    							service = new MyService(clientNumber, index++, SERVICE_NEW);
-	    							
+	    							service = new MyService(clientNumber, index, SERVICE_NEW);
+
 	    							// Prosba o podanie danych przez usera
 	    							out.flush();
 		    						out.println("Podaj po przecinku, nazwe oraz czas wykonania zamowienia");
@@ -97,7 +100,7 @@ public class Server implements Runnable
 		    						
 		    						// Rozdzielenie danych wzietych od usera
 		    						tempTable = userTempInput.split(",");
-		    						if(isNumeric(tempTable[1]))
+		    						if(tempTable.length > 1 && isNumeric(tempTable[1]))
 		    						{
 		    							// Dodaj dane otrzymane od usera
 		    							service.setOrderName(tempTable[0]);
@@ -116,14 +119,40 @@ public class Server implements Runnable
 		    						}
 		    						
 	    							break;
-	    				case "4" : 	
+	    				case "4" : 	// Prosba o podanie danych przez usera
 			    					out.flush();
-			    					out.println("Podaj po przecinku, numer swojej uslugi, ktora chcesz anulowac");
+			    					out.println("Podaj numer swojej uslugi, ktora chcesz anulowac");
+			    					
+			    					// Pobranie danych od usera
+		    						in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		    						userTempInput = in.readLine();
 		    						
-	    					
-	    					
-	    					
-	    					
+		    						if(isNumeric(tempTable[0]))
+		    						{
+		    							//Przeszukaj liste w poszukiwaniu uslug dodanych przez tego usera
+				    					index = Integer.parseInt(tempTable[0]);
+										for(MyService tempService : serviceList)
+					    				{
+											
+											if(tempService.getOrderOwner() == clientNumber)
+											{
+												if(tempService.getOrderIndex() == index)
+												{
+													// Update na liscie
+													tempService.setOrderStatus(SERVICE_WITHDRAWN);
+													serviceList.set(serviceList.indexOf(tempService), tempService);
+													
+													System.out.println(tempService.getOrderClient() + " " + tempService.getOrderDate() + " " + tempService.getOrderIndex() + " " + tempService.getOrderName() + " " + tempService.getOrderOwner() + " " + tempService.getOrderStatus());
+												}
+											}
+					    				}
+			    						
+			    						out.println("Gotowe");
+		    						}
+		    						else
+		    						{
+		    							out.println("Blad, popraw dane");
+		    						} 					
 	    							break;
 	    				case "5" : 	
 	    					
@@ -168,6 +197,7 @@ public class Server implements Runnable
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	public boolean isNumeric(String str)  
 	{  
 		try  
